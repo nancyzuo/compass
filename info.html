@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compass Fellowship</title>
+  <style>
+    @font-face {
+      font-family: 'Providence Sans';
+      src: url('fonts/Providence\ Sans\ Regular.ttf') format('ttf');
+      font-weight: normal;
+      font-style: normal;
+    }
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Providence Sans', sans-serif;
+      overflow-x: hidden;
+      color: white;
+      text-align: center;
+    }
+
+    /* Background shader container (you'll replace with canvas or shader element) */
+    #background {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      /* background: #0b0220;  */
+    }
+
+    #skyCanvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    /* Foreground silhouettes overlay */
+    #overlay {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 200px;
+      z-index: 20;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: 0.2s ease;
+      font-weight: 500;
+      position: relative; 
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+
+
+    
+
+    /* Center star + title */
+    .center-container {
+        
+      margin-top: 20vh;
+    }
+
+    .title-image {
+        display: block;
+        margin: 0 auto;         /* Horizontally center the image */
+        max-width: 800px;       /* Adjust to fit your design */
+        height: auto;
+        margin-bottom: 30px;
+        margin-right: 190px;
+        }
+
+
+
+    .subtitle {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .location {
+      font-size: 1.4rem;
+      color: #ffd84d;
+      margin-bottom: 30px;
+    }
+
+    /* Apply Button */
+    .apply-btn {
+      display: inline-block;
+      background: white;
+      color: black;
+      padding: 14px 34px;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .apply-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .apply-deadline {
+        font-size: 0.75rem;
+        color: white;
+        margin-top: 10px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        opacity: 0.3;
+        }
+
+        
+  </style>
+</head>
+<body>
+
+  <!-- SHADER BACKGROUND (replace with your WebGL canvas) -->
+  <div id="background">
+    <canvas id="skyCanvas"></canvas>
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <nav>
+    <a href="info.html">INFO</a>
+    <a href="team.html">TEAM</a>
+    <a href="faq.html">FAQ</a>
+    <a href="https://google.com" target="_blank">APPLY</a>
+  </nav>
+
+
+  <!-- FIXED FOREGROUND SILHOUETTE OVERLAY -->
+  <img id="overlay" src="silhouettes.png" alt="people sitting on hills" />
+
+</body>
+
+<!-- Load glslCanvas library (CDN version) -->
+<script src="https://unpkg.com/glslCanvas/dist/glslCanvas.min.js"></script>
+<script>
+  // Get canvas reference and set its size
+  const canvas = document.getElementById('skyCanvas');
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // Your GLSL shader as a string
+  const shaderSource = `
+    #ifdef GL_ES
+precision mediump float;
+#endif
+
+uniform vec2 u_resolution;
+uniform float u_time;
+
+void main() {
+    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+
+    // Gradient background (dark blue/purple)
+    vec3 colorA = vec3(0.06, 0.01, 0.20); // deep purple
+    vec3 colorB = vec3(0.15, 0.07, 0.33); // upper blue
+    float grad = smoothstep(0.0, 1.0, uv.y);
+    vec3 bg = mix(colorB, colorA, grad);
+
+    // Starfield - random speckles
+    float stars = step(0.998, fract(sin(dot(uv * u_resolution.xy, vec2(12.9898, 78.233))) * 43758.5453));
+    float starGlow = smoothstep(0.4, 1.0, stars) * 0.8;
+
+    // Add soft purple fog near bottom
+    float fog = smoothstep(0.0, 0.3, uv.y) * 0.3;
+
+    vec3 finalColor = bg + vec3(starGlow) + vec3(0.5,0.1,0.3) * fog;
+
+    gl_FragColor = vec4(finalColor, 1.0);
+}
+
+  `;
+
+  // Initialize shader on canvas
+  const sandbox = new GlslCanvas(canvas);
+  sandbox.load(shaderSource);
+</script>
+
+
+</html>
