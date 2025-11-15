@@ -23,6 +23,11 @@ float microStar(vec2 uv, vec2 pos, float r) {
     return smoothstep(r, 0.0, d);
 }
 
+// Simple random noise function
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123 + u_time * 100.0);
+}
+
 void main() {
     vec2 uv = gl_FragCoord.xy / u_resolution.xy;
 
@@ -33,13 +38,18 @@ void main() {
     col += horizonMist(uv.y);
 
     // Add a *few* tiny soft stars
-    for (float i = 0.0; i < 15.0; i++) {   // very few!
-        vec2 sp = fract(vec2(sin(i*123.44), cos(i*555.88)) * 9999.0 * (0.54+i));
-        sp.y = 0.18 + 0.78 * sp.y;           // restrict vertical spread
-        float st = microStar(uv, sp, 0.002); // much smaller radius
-        float b = 0.3 + 0.3*fract(sin(i*4.42)*1000.21);
-        col += vec3(1.0) * st * b * 0.10;    // very low intensity
+    for (float i = 0.0; i < 15.0; i++) {
+        vec2 sp = fract(vec2(sin(i*123.44), cos(i*555.88)) * 9999.0 * (0.54 + i));
+        sp.y = 0.18 + 0.78 * sp.y;
+        float st = microStar(uv, sp, 0.002);
+        float b = 0.3 + 0.3 * fract(sin(i*4.42) * 1000.21);
+        col += vec3(1.0) * st * b * 0.10;
     }
 
+    // Add grain noise (very subtle)
+    float grain = random(uv * u_resolution.xy);
+    col += vec3(grain * 0.05); // Adjust 0.03 for grain intensity
+
+    // Output final color
     gl_FragColor = vec4(col, 1.0);
 }

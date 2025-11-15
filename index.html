@@ -10,8 +10,8 @@
 
   <style>
     @font-face {
-      font-family: 'Providence Sans';
-      src: url('fonts/Providence\ Sans\ Regular.ttf') format('ttf');
+      font-family: 'Inconsolata';
+      src: url('fonts/Inconsolata.ttf') format('ttf');
       font-weight: normal;
       font-style: normal;
     }
@@ -23,7 +23,7 @@
     }
 
     body {
-      font-family: 'Providence Sans', sans-serif;
+      font-family: 'Inconsolata';
       overflow-x: hidden;
       color: white;
       text-align: center;
@@ -141,12 +141,12 @@
 
 
     .subtitle {
-      font-size: 1.3rem;
-      margin-bottom: 8px;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
     }
 
     .location {
-      font-size: 1.4rem;
+      font-size: 1.1rem;
       color: #ffd84d;
       margin-bottom: 30px;
     }
@@ -207,7 +207,7 @@
 
 <body>
 
-    <script>
+<script>
   const fireflyCount = 30; // number of fireflies
   const body = document.body;
 
@@ -227,10 +227,25 @@
   }
 </script>
 
+
+<!-- adding music, maybe change it to whern click on the star, it'll spin and play the music -->
+<!-- 
+<script>
+  document.body.addEventListener('click', () => {
+    const audio = document.getElementById('bg-music');
+    audio.muted = false;
+    audio.play();
+  }, { once: true });
+</script>
+ <audio id="bg-music" autoplay loop muted>
+    <source src="audio/moonriver.mp3" type="audio/mp3" />
+    </audio> -->
+
   <!-- SHADER BACKGROUND (replace with your WebGL canvas) -->
   <div id="background">
     <canvas id="skyCanvas"></canvas>
   </div>
+
 
   <!-- NAVIGATION BAR -->
    <nav>
@@ -252,7 +267,7 @@
     <div class="subtitle">First Run: January 24 - 28 <br>Second Run: February 1 - 5</div>
     <div class="location">Wenshan District, Taipei</div>
     <a href="https://example.com" target="_blank" class="apply-btn">APPLY</a>
-    <div class="apply-deadline">by january 10, 2026</div>
+    <div class="apply-deadline">by jan 10 2026</div>
 
   </div>
 
