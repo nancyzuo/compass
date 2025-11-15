@@ -249,7 +249,7 @@
   <div class="center-container">
     <div class="center-container">
     <img src="images/logoname.png" alt="COMPASS FELLOWSHIP logo title" class="title-image" />
-    <div class="subtitle">First Run: January 24 - 28 <br>Secondn Run: February 1 - 5</div>
+    <div class="subtitle">First Run: January 24 - 28 <br>Second Run: February 1 - 5</div>
     <div class="location">Wenshan District, Taipei</div>
     <a href="https://example.com" target="_blank" class="apply-btn">APPLY</a>
     <div class="apply-deadline">by january 10, 2026</div>
@@ -257,13 +257,39 @@
   </div>
 
   <!-- FIXED FOREGROUND SILHOUETTE OVERLAY -->
-  <img id="overlay" src="images/hills.png" alt="people sitting on hills" />
+  <img id="overlay" src="images/taipei101.png" alt="people sitting on hills" />
 
 </body>
 
-<!-- Load glslCanvas library (CDN version) -->
-
 <script>
+  const canvas = document.getElementById('skyCanvas');
+
+  async function loadShaderSource(url) {
+    const response = await fetch(url);
+    return response.text();
+  }
+
+  async function initShader() {
+    const shaderSource = await loadShaderSource('shader.frag');
+    const sandbox = new glsl.Canvas(canvas);
+    sandbox.load(shaderSource);
+  }
+
+  // On page load, initialize shader
+  window.addEventListener('load', initShader);
+
+  // Resize canvas as before
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+</script>
+
+
+<!-- <script>
   // Get canvas reference and set its size
   const canvas = document.getElementById('skyCanvas');
   function resizeCanvas() {
@@ -284,10 +310,10 @@ uniform float u_time;
 
 // Soft vertical gradient matching calm sky
 vec3 calmGradient(float y) {
-    vec3 top = vec3(18.0/255.0, 16.0/255.0, 42.0/255.0); // deep indigo
-    vec3 bottom = vec3(43.0/255.0, 40.0/255.0, 72.0/255.0); // gentle blue-purple
+    vec3 bottom = vec3(200.0/255.0, 65.0/255.0, 203.0/255.0); // gentle blue-purple
+    vec3 top = vec3(17.0/255.0, 10.0/255.0, 32.0/255.0); // deep indigo
     // Exaggerate transition for a stronger dark top
-    return mix(top, bottom, pow(y, 1.5));
+    return mix(bottom, top, pow(y, 0.2));
 }
 
 // Minimal mist at bottom
@@ -329,7 +355,7 @@ void main() {
   // Initialize shader on canvas
   const sandbox = new glsl.Canvas(canvas);
   sandbox.load(shaderSource);
-</script>
+</script> -->
 
 
 </html>
