@@ -21,13 +21,62 @@
       padding: 0;
       box-sizing: border-box;
     }
+    .content-container {
+        max-width: 800px;
+        margin: 120px auto 40px auto; /* Top margin to clear fixed nav height + padding */
+        padding: 0 40px; /* Left-right padding to line up with nav */
+        color: white;
+        text-align: left;
+        line-height: 1.6;
+        
+    }
 
     body {
       font-family: 'Providence Sans', sans-serif;
       overflow-x: hidden;
       color: white;
       text-align: center;
+       max-width: 800px;
+       
+        line-height: 1.6;
+        text-align: left;
     }
+
+
+h1, h2 {
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 1.8rem; /* smaller title */
+  padding-bottom: 8px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.3rem; /* smaller subtitle */
+  margin-top: 30px;
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #c4c4c4;
+}
+
+.note {
+  font-size: 0.9rem;
+  color: #777;
+  font-style: italic;
+  margin-top: 10px;
+  border-left: 3px solid #f7c948;
+  padding-left: 10px;
+  max-width: 600px;
+}
+
 
     /* Background shader container (you'll replace with canvas or shader element) */
     #background {
@@ -200,6 +249,7 @@
       transform: translateY(-10px) translateX(5px) scale(1.2);
     }
   }
+
         
   </style>
 
@@ -245,6 +295,18 @@
         </ul>
     </nav>
 
+    <div class="content-container">
+        <h2>What We Will Explore</h2>
+        <p>Mornings introduce central frameworks and ideas that give us the tools for diving into discussions and workshops in the afternoon and evenings. Our classes take a wide range, pulling from ideas in economics, cognitive science, anthropology, philosophy, or computer science. This includes in-depth looks at applications of game theory or decision making theory. It can also look like revisiting “simple” concepts like statistics from unusual angles that give new perspectives. Armed with these ideas, afternoons and evenings are filled with workshops and facilitated discussions that puts them to use. Guest speakers from academic researchers to industry veterans may be invited in evenings for exploring applications of these ideas in the real world.</p>
+        
+        <h2>Our Methodology</h2>
+        <p>Lectures alone are rarely sufficient for the integration of profound ideas. In composing a cohort of inquisitive, thoughtful group, we host an dialogue-rich environment with small class sizes where we can dive into subjects of life that are often neglected within and beyond academics. By living together for 5 days, we give abundant space for immersive dialogue that can go to depths usually unavailable. Great degrees of agency is also given to participants to create or ask for the sessions they would find most engaging. The learning environment will be unlike most typical education programs, emphasizing our intrinsic interests as the compass for what we want to learn and pursue.</p>
+        
+        <h2>Who This Is For</h2>
+        <p>Those currently in university or between 18-23 years old, primarily from Taiwan. The cohort will have a broad range of interests and pursuits to form an interdisciplinary environment. To this end we are looking for applicants to demonstrate an interest and/or capacity for open and curious inquiry, model that which is familiar and unfamiliar, and introspective awareness. There are no other hard requirements like GPA or being in a particular major. Comfort with mathematics is recommended, but not a prerequisite. Two cohorts of ~20 students each. The program is free to attend, with meal and stay covered.</p>
+        
+        <p class="note">*Note that the program will be run in English, but most staff are proficient in Chinese.*</p>
+    </div>
 
 
   <!-- FIXED FOREGROUND SILHOUETTE OVERLAY -->
