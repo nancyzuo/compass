@@ -9,8 +9,7 @@ uniform float u_time;
 vec3 calmGradient(float y) {
     vec3 bottom = vec3(200.0/255.0, 65.0/255.0, 203.0/255.0); // gentle blue-purple
     vec3 top = vec3(17.0/255.0, 10.0/255.0, 32.0/255.0); // deep indigo
-    // Exaggerate transition for a stronger dark top
-    return mix(bottom, top, pow(y, 0.2));
+    return mix(bottom, top, pow(y, 0.18));
 }
 
 // Minimal mist at bottom
