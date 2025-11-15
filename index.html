@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compass Fellowship</title>
+  <link rel="icon" type="image/png" href="/images/compasslogo.png">
+  <title>compass fellowship '26</title>
     <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
 
 
@@ -58,29 +59,65 @@
 
     /* Navbar */
     nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: center;
-      gap: 200px;
-      z-index: 20;
-      font-size: 1.1rem;
-      letter-spacing: 1px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-around; /* evenly spaces links with equal space around */
+        gap: 0; /* remove large fixed gap */
+        z-index: 20;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        align-items: center;
+        padding-left: 180px; /* keep space for fixed logo */
+        box-sizing: border-box;
     }
 
-    nav a {
-      color: rgba(255,255,255,0.55);
-      text-decoration: none;
-      transition: 0.2s ease;
-      font-weight: 500;
-      position: relative; 
+    .nav-logo {
+    position: fixed; /* fixed so it stays top left */
+    left: 40px;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    height: 60px;
     }
 
-    nav a:hover {
-      color: white;
+    .nav-logo img {
+        height: 40px;
+        width: auto;
+        display: block;
+        transition: filter 0.3s ease, box-shadow 0.3s ease;
+
     }
+
+    .nav-logo img:hover {
+        filter: drop-shadow(0 0 8px yellow);
+    }
+
+
+    .nav-links {
+        display: flex;
+        justify-content: space-between;  /* distribute links evenly across full width */
+        flex-grow: 1;  /* allow nav-links to grow and fill space */
+        margin-left: 40px;  /* spacing after logo */
+        list-style: none;  /* remove bullet points */
+        padding: 0;
+    }
+
+    .nav-links a {
+        color: rgba(255,255,255,0.55);
+        text-decoration: none;
+        transition: 0.2s ease;
+        font-weight: 500;
+        position: relative;
+        padding: 0 10px;  /* optional padding for clickable area */
+    }
+
+    .nav-links a:hover {
+    color: white;
+    }
+
 
 
 
@@ -140,10 +177,55 @@
         opacity: 0.3;
         }
 
+
+        /* fireflies */
+        .firefly {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, rgba(255, 223, 70, 0.9) 40%, transparent 80%);
+    border-radius: 50%;
+    filter: blur(3px);
+    opacity: 0.8;
+    animation: flicker 3s infinite alternate;
+  }
+
+  @keyframes flicker {
+    0%, 100% {
+      opacity: 1;
+      transform: translateY(0) translateX(0) scale(1);
+    }
+    50% {
+      opacity: 0.3;
+      transform: translateY(-10px) translateX(5px) scale(1.2);
+    }
+  }
         
   </style>
+
 </head>
+
 <body>
+
+    <script>
+  const fireflyCount = 30; // number of fireflies
+  const body = document.body;
+
+  for (let i = 0; i < fireflyCount; i++) {
+    const firefly = document.createElement('div');
+    firefly.classList.add('firefly');
+
+    // Random initial position
+    firefly.style.top = Math.random() * window.innerHeight + 'px';
+    firefly.style.left = Math.random() * window.innerWidth + 'px';
+
+    // Random animation delay and duration for natural effect
+    firefly.style.animationDelay = (Math.random() * 3) + 's';
+    firefly.style.animationDuration = (2 + Math.random() * 3) + 's';
+
+    body.appendChild(firefly);
+  }
+</script>
 
   <!-- SHADER BACKGROUND (replace with your WebGL canvas) -->
   <div id="background">
@@ -151,12 +233,17 @@
   </div>
 
   <!-- NAVIGATION BAR -->
-  <nav>
-    <a href="info.html">INFO</a>
-    <a href="team.html">TEAM</a>
-    <a href="faq.html">FAQ</a>
-    <a href="https://google.com" target="_blank">APPLY</a>
-  </nav>
+   <nav>
+        <a href="index.html" class="nav-logo">
+            <img src="images/logo.svg" alt="Logo" />
+        </a>
+        <ul class="nav-links">
+            <a href="info.html">INFO</a>
+            <a href="team.html">TEAM</a>
+            <a href="faq.html">FAQ</a>
+            <a href="https://google.com" target="_blank">APPLY</a>
+        </ul>
+    </nav>
 
   <!-- MAIN LOGO + TEXT -->
   <div class="center-container">
