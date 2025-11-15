@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/images/compasslogo.png">
   <title>compass fellowship '26</title>
+    <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
+
+
   <style>
     @font-face {
       font-family: 'Providence Sans';
@@ -34,6 +37,15 @@
       background: #0b0220; 
     }
 
+    #skyCanvas {
+         position: fixed;
+        inset: 0;      /* top:0; right:0; bottom:0; left:0 */
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;   /* BEHIND your content */
+        display: block;
+    }
+
     /* Foreground silhouettes overlay */
     #overlay {
       position: fixed;
@@ -47,29 +59,65 @@
 
     /* Navbar */
     nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: center;
-      gap: 200px;
-      z-index: 20;
-      font-size: 1.1rem;
-      letter-spacing: 1px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-around; /* evenly spaces links with equal space around */
+        gap: 0; /* remove large fixed gap */
+        z-index: 20;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        align-items: center;
+        padding-left: 180px; /* keep space for fixed logo */
+        box-sizing: border-box;
     }
 
-    nav a {
-      color: rgba(255,255,255,0.55);
-      text-decoration: none;
-      transition: 0.2s ease;
-      font-weight: 500;
-      position: relative; 
+    .nav-logo {
+    position: fixed; /* fixed so it stays top left */
+    left: 40px;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    height: 60px;
     }
 
-    nav a:hover {
-      color: white;
+    .nav-logo img {
+        height: 40px;
+        width: auto;
+        display: block;
+        transition: filter 0.3s ease, box-shadow 0.3s ease;
+
     }
+
+    .nav-logo img:hover {
+        filter: drop-shadow(0 0 8px yellow);
+    }
+
+
+    .nav-links {
+        display: flex;
+        justify-content: space-between;  /* distribute links evenly across full width */
+        flex-grow: 1;  /* allow nav-links to grow and fill space */
+        margin-left: 40px;  /* spacing after logo */
+        list-style: none;  /* remove bullet points */
+        padding: 0;
+    }
+
+    .nav-links a {
+        color: rgba(255,255,255,0.55);
+        text-decoration: none;
+        transition: 0.2s ease;
+        font-weight: 500;
+        position: relative;
+        padding: 0 10px;  /* optional padding for clickable area */
+    }
+
+    .nav-links a:hover {
+    color: white;
+    }
+
 
 
 
@@ -84,10 +132,10 @@
     .title-image {
         display: block;
         margin: 0 auto;         /* Horizontally center the image */
-        max-width: 800px;       /* Adjust to fit your design */
+        max-width: 75%;       /* Adjust to fit your design */
         height: auto;
-        margin-bottom: 30px;
-        margin-right: 190px;
+        margin-bottom: 3%;
+        margin-right: 10%;
         }
 
 
@@ -129,10 +177,55 @@
         opacity: 0.3;
         }
 
+
+        /* fireflies */
+        .firefly {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, rgba(255, 223, 70, 0.9) 40%, transparent 80%);
+    border-radius: 50%;
+    filter: blur(3px);
+    opacity: 0.8;
+    animation: flicker 3s infinite alternate;
+  }
+
+  @keyframes flicker {
+    0%, 100% {
+      opacity: 1;
+      transform: translateY(0) translateX(0) scale(1);
+    }
+    50% {
+      opacity: 0.3;
+      transform: translateY(-10px) translateX(5px) scale(1.2);
+    }
+  }
         
   </style>
+
 </head>
+
 <body>
+
+    <script>
+  const fireflyCount = 30; // number of fireflies
+  const body = document.body;
+
+  for (let i = 0; i < fireflyCount; i++) {
+    const firefly = document.createElement('div');
+    firefly.classList.add('firefly');
+
+    // Random initial position
+    firefly.style.top = Math.random() * window.innerHeight + 'px';
+    firefly.style.left = Math.random() * window.innerWidth + 'px';
+
+    // Random animation delay and duration for natural effect
+    firefly.style.animationDelay = (Math.random() * 3) + 's';
+    firefly.style.animationDuration = (2 + Math.random() * 3) + 's';
+
+    body.appendChild(firefly);
+  }
+</script>
 
   <!-- SHADER BACKGROUND (replace with your WebGL canvas) -->
   <div id="background">
@@ -140,12 +233,18 @@
   </div>
 
   <!-- NAVIGATION BAR -->
-  <nav>
-    <a href="info.html">INFO</a>
-    <a href="team.html">TEAM</a>
-    <a href="faq.html">FAQ</a>
-    <a href="https://google.com" target="_blank">APPLY</a>
-  </nav>
+   <nav>
+        <a href="index.html" class="nav-logo">
+            <img src="images/logo.svg" alt="Logo" />
+        </a>
+        <ul class="nav-links">
+            <a href="info.html">INFO</a>
+            <a href="team.html">TEAM</a>
+            <a href="faq.html">FAQ</a>
+            <a href="https://google.com" target="_blank">APPLY</a>
+        </ul>
+    </nav>
+
 
 
   <!-- FIXED FOREGROUND SILHOUETTE OVERLAY -->
@@ -154,7 +253,7 @@
 </body>
 
 <!-- Load glslCanvas library (CDN version) -->
-<script src="https://unpkg.com/glslCanvas/dist/glslCanvas.min.js"></script>
+
 <script>
   // Get canvas reference and set its size
   const canvas = document.getElementById('skyCanvas');
@@ -167,38 +266,59 @@
 
   // Your GLSL shader as a string
   const shaderSource = `
-    #ifdef GL_ES
+#ifdef GL_ES
 precision mediump float;
 #endif
 
 uniform vec2 u_resolution;
 uniform float u_time;
 
+// Soft vertical gradient matching calm sky
+vec3 calmGradient(float y) {
+    vec3 top = vec3(18.0/255.0, 16.0/255.0, 42.0/255.0); // deep indigo
+    vec3 bottom = vec3(43.0/255.0, 40.0/255.0, 72.0/255.0); // gentle blue-purple
+    // Exaggerate transition for a stronger dark top
+    return mix(top, bottom, pow(y, 1.5));
+}
+
+// Minimal mist at bottom
+vec3 horizonMist(float y) {
+    return vec3(72.0/255.0, 63.0/255.0, 109.0/255.0) * pow(1.0 - y, 3.5) * 0.2;
+}
+
+// Soft micro-star (just a few pixels wide)
+float microStar(vec2 uv, vec2 pos, float r) {
+    float d = length(uv - pos);
+    return smoothstep(r, 0.0, d);
+}
+
 void main() {
     vec2 uv = gl_FragCoord.xy / u_resolution.xy;
 
-    // Gradient background (dark blue/purple)
-    vec3 colorA = vec3(0.06, 0.01, 0.20); // deep purple
-    vec3 colorB = vec3(0.15, 0.07, 0.33); // upper blue
-    float grad = smoothstep(0.0, 1.0, uv.y);
-    vec3 bg = mix(colorB, colorA, grad);
+    // Calm sky base
+    vec3 col = calmGradient(uv.y);
 
-    // Starfield - random speckles
-    float stars = step(0.998, fract(sin(dot(uv * u_resolution.xy, vec2(12.9898, 78.233))) * 43758.5453));
-    float starGlow = smoothstep(0.4, 1.0, stars) * 0.8;
+    // Soft horizon glow (optional, keep light)
+    col += horizonMist(uv.y);
 
-    // Add soft purple fog near bottom
-    float fog = smoothstep(0.0, 0.3, uv.y) * 0.3;
+    // Add a *few* tiny soft stars
+    for (float i = 0.0; i < 15.0; i++) {   // very few!
+        vec2 sp = fract(vec2(sin(i*123.44), cos(i*555.88)) * 9999.0 * (0.54+i));
+        sp.y = 0.18 + 0.78 * sp.y;           // restrict vertical spread
+        float st = microStar(uv, sp, 0.002); // much smaller radius
+        float b = 0.3 + 0.3*fract(sin(i*4.42)*1000.21);
+        col += vec3(1.0) * st * b * 0.10;    // very low intensity
+    }
 
-    vec3 finalColor = bg + vec3(starGlow) + vec3(0.5,0.1,0.3) * fog;
-
-    gl_FragColor = vec4(finalColor, 1.0);
+    gl_FragColor = vec4(col, 1.0);
 }
+
+
 
   `;
 
   // Initialize shader on canvas
-  const sandbox = new GlslCanvas(canvas);
+  const sandbox = new glsl.Canvas(canvas);
   sandbox.load(shaderSource);
 </script>
 
