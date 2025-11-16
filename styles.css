@@ -12,6 +12,19 @@
   box-sizing: border-box;
 }
 
+/* cursor */
+.star {
+  position: fixed;
+  pointer-events: none;
+  z-index: 11000; /* above modal z-index 10000 */
+  color: white;
+  font-size: 24px;
+  user-select: none;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
 /* Body and html */
 html, body {
   height: 100%;
