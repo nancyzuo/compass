@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/images/compasslogo.png">
+  <script src="components/fireflies.js" defer></script>
   <title>compass fellowship '26</title>
     <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
 
@@ -111,6 +112,19 @@ p {
       z-index: 10;
       pointer-events: none;
     }
+
+    /* Subtle top black vignette overlay */
+    #top-vignette {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100px; /* Adjust height to cover navbar + some fade */
+        pointer-events: none; /* So clicks pass through */
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), transparent);
+        z-index: 19; /* Just below navbar z-index (20) */
+    }
+
 
     /* Navbar */
     nav {
@@ -222,15 +236,31 @@ p {
     .apply-btn:hover {
       transform: scale(1.05);
     }
+    
 
-    .apply-deadline {
-        font-size: 0.75rem;
-        color: white;
-        margin-top: 10px;
-        font-weight: 500;
-        letter-spacing: 1px;
-        opacity: 0.3;
-        }
+ .nav-links a.apply-btn {
+  display: inline-block;
+  background: white;
+  color: black;
+  padding: 10px 28px; /* slightly smaller padding for navbar */
+  border-radius: 25px;
+  font-size: 1rem; /* adjust font size to fit navbar */
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  will-change: transform, box-shadow;
+  margin-left: 10px; /* spacing from other links */
+}
+
+.nav-links a.apply-btn:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 2px 2px #fff94d,
+    0 0 4px 2px #ffe14d,
+    0 0 10px 3px #ce7c17;
+  color: black;
+  cursor: pointer;
+}
 
 
         /* fireflies */
@@ -266,33 +296,15 @@ p {
 
 <body>
 
-    <script>
-  const fireflyCount = 30; // number of fireflies
-  const body = document.body;
-
-  for (let i = 0; i < fireflyCount; i++) {
-    const firefly = document.createElement('div');
-    firefly.classList.add('firefly');
-
-    // Random initial position
-    firefly.style.top = Math.random() * window.innerHeight + 'px';
-    firefly.style.left = Math.random() * window.innerWidth + 'px';
-
-    // Random animation delay and duration for natural effect
-    firefly.style.animationDelay = (Math.random() * 3) + 's';
-    firefly.style.animationDuration = (2 + Math.random() * 3) + 's';
-
-    body.appendChild(firefly);
-  }
-</script>
+<div id="top-vignette"></div>
 
   <!-- SHADER BACKGROUND (replace with your WebGL canvas) -->
   <div id="background">
     <canvas id="skyCanvas"></canvas>
   </div>
 
-  <!-- NAVIGATION BAR -->
-   <nav>
+
+  <nav>
         <a href="index.html" class="nav-logo">
             <img src="images/logo.svg" alt="Logo" />
         </a>
@@ -300,7 +312,7 @@ p {
             <a href="info.html">INFO</a>
             <a href="team.html">TEAM</a>
             <a href="faq.html">FAQ</a>
-            <a href="https://google.com" target="_blank">APPLY</a>
+            <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" target="_blank" class="apply-btn">APPLY</a>
         </ul>
     </nav>
     
@@ -367,33 +379,7 @@ window.addEventListener('DOMContentLoaded', updateBlurOnScroll);
 
 </body>
 
-<!-- Load glslCanvas library (CDN version) -->
+  <script src="components/glslShader.js" defer></script>
 
-<script>
-  const canvas = document.getElementById('skyCanvas');
-
-  async function loadShaderSource(url) {
-    const response = await fetch(url);
-    return response.text();
-  }
-
-  async function initShader() {
-    const shaderSource = await loadShaderSource('shader.frag');
-    const sandbox = new glsl.Canvas(canvas);
-    sandbox.load(shaderSource);
-  }
-
-  // On page load, initialize shader
-  window.addEventListener('load', initShader);
-
-  // Resize canvas as before
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-</script>
 
 </html>

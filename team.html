@@ -4,202 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/images/compasslogo.png">
+   <link rel="stylesheet" href="styles.css" />
+   <script src="components/fireflies.js" defer></script>
   <title>compass fellowship '26</title>
     <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
 
 
   <style>
-     @font-face {
-      font-family: 'Inconsolata';
-      src: url('fonts/Inconsolata.ttf') format('ttf');
-      font-weight: normal;
-      font-style: normal;
-    }
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inconsolata';
-      overflow-x: hidden;
-      color: white;
-      text-align: center;
-    }
-
-    /* Background shader container (you'll replace with canvas or shader element) */
-    #background {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background: #0b0220; 
-    }
-
-    #skyCanvas {
-         position: fixed;
-        inset: 0;      /* top:0; right:0; bottom:0; left:0 */
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;   /* BEHIND your content */
-        display: block;
-    }
-
-    /* Foreground silhouettes overlay */
-    #overlay {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: auto;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    /* Navbar */
-    nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        padding: 20px 40px;
-        display: flex;
-        justify-content: space-around; /* evenly spaces links with equal space around */
-        gap: 0; /* remove large fixed gap */
-        z-index: 20;
-        font-size: 1.1rem;
-        letter-spacing: 1px;
-        align-items: center;
-        padding-left: 180px; /* keep space for fixed logo */
-        box-sizing: border-box;
-    }
-
-    .nav-logo {
-    position: fixed; /* fixed so it stays top left */
-    left: 40px;
-    top: 20px;
-    display: flex;
-    align-items: center;
-    height: 60px;
-    }
-
-    .nav-logo img {
-        height: 40px;
-        width: auto;
-        display: block;
-        transition: filter 0.3s ease, box-shadow 0.3s ease;
-
-    }
-
-    .nav-logo img:hover {
-        filter: drop-shadow(0 0 8px yellow);
-    }
-
-
-    .nav-links {
-        display: flex;
-        justify-content: space-between;  /* distribute links evenly across full width */
-        flex-grow: 1;  /* allow nav-links to grow and fill space */
-        margin-left: 40px;  /* spacing after logo */
-        list-style: none;  /* remove bullet points */
-        padding: 0;
-    }
-
-    .nav-links a {
-        color: rgba(255,255,255,0.55);
-        text-decoration: none;
-        transition: 0.2s ease;
-        font-weight: 500;
-        position: relative;
-        padding: 0 10px;  /* optional padding for clickable area */
-    }
-
-    .nav-links a:hover {
-    color: white;
-    }
-
-
-
-
-    
-
-    /* Center star + title */
-    .center-container {
-        
-      margin-top: 20vh;
-    }
-
-    .title-image {
-        display: block;
-        margin: 0 auto;         /* Horizontally center the image */
-        max-width: 75%;       /* Adjust to fit your design */
-        height: auto;
-        margin-bottom: 3%;
-        margin-right: 10%;
-        }
-
-
-
-    .subtitle {
-      font-size: 1.3rem;
-      margin-bottom: 8px;
-    }
-
-    .location {
-      font-size: 1.4rem;
-      color: #ffd84d;
-      margin-bottom: 30px;
-    }
-
-    /* Apply Button */
-    .apply-btn {
-      display: inline-block;
-      background: white;
-      color: black;
-      padding: 14px 34px;
-      border-radius: 25px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: 0.2s ease;
-    }
-
-    .apply-btn:hover {
-      transform: scale(1.05);
-    }
-
-    .apply-deadline {
-        font-size: 0.75rem;
-        color: white;
-        margin-top: 10px;
-        font-weight: 500;
-        letter-spacing: 1px;
-        opacity: 0.3;
-        }
-
-
-        /* fireflies */
-        .firefly {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: radial-gradient(circle, rgba(255, 223, 70, 0.9) 40%, transparent 80%);
-    border-radius: 50%;
-    filter: blur(3px);
-    opacity: 0.8;
-    animation: flicker 3s infinite alternate;
-  }
-
-  @keyframes flicker {
-    0%, 100% {
-      opacity: 1;
-      transform: translateY(0) translateX(0) scale(1);
-    }
-    50% {
-      opacity: 0.3;
-      transform: translateY(-10px) translateX(5px) scale(1.2);
-    }
-  }
+  
 
   .team-container {
     display: grid;
@@ -264,46 +76,23 @@
 
 <body>
 
-    <script>
-  const fireflyCount = 30; // number of fireflies
-  const body = document.body;
-
-  for (let i = 0; i < fireflyCount; i++) {
-    const firefly = document.createElement('div');
-    firefly.classList.add('firefly');
-
-    // Random initial position
-    firefly.style.top = Math.random() * window.innerHeight + 'px';
-    firefly.style.left = Math.random() * window.innerWidth + 'px';
-
-    // Random animation delay and duration for natural effect
-    firefly.style.animationDelay = (Math.random() * 3) + 's';
-    firefly.style.animationDuration = (2 + Math.random() * 3) + 's';
-
-    body.appendChild(firefly);
-  }
-
-
   
-</script>
-
+<div id="top-vignette"></div>
   <!-- SHADER BACKGROUND (replace with your WebGL canvas) -->
   <div id="background">
     <canvas id="skyCanvas"></canvas>
   </div>
 
-  <!-- NAVIGATION BAR -->
-   <nav>
-        <a href="index.html" class="nav-logo">
-            <img src="images/logo.svg" alt="Logo" />
-        </a>
-        <ul class="nav-links">
-            <a href="info.html">INFO</a>
-            <a href="team.html">TEAM</a>
-            <a href="faq.html">FAQ</a>
-            <a href="https://google.com" target="_blank">APPLY</a>
-        </ul>
-    </nav>
+  
+ <div id="navbar-placeholder"></div>
+
+<script>
+  fetch('components/navbar.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('navbar-placeholder').innerHTML = data;
+    });
+</script>
 
 
 
@@ -330,33 +119,7 @@
 
 </body>
 
-<!-- Load glslCanvas library (CDN version) -->
-<script>
-  const canvas = document.getElementById('skyCanvas');
-
-  async function loadShaderSource(url) {
-    const response = await fetch(url);
-    return response.text();
-  }
-
-  async function initShader() {
-    const shaderSource = await loadShaderSource('shader.frag');
-    const sandbox = new glsl.Canvas(canvas);
-    sandbox.load(shaderSource);
-  }
-
-  // On page load, initialize shader
-  window.addEventListener('load', initShader);
-
-  // Resize canvas as before
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-</script>
-
+  <script src="components/glslShader.js" defer></script>
+ <script src="components/cursor.js"></script>
 
 </html>

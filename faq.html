@@ -4,241 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/images/compasslogo.png">
+<link rel="stylesheet" href="styles.css" />
+<script src="components/fireflies.js" defer></script> 
   <title>compass fellowship '26</title>
     <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
-
-
-  <style>
-    @font-face {
-      font-family: 'Inconsolata';
-      src: url('fonts/Inconsolata.ttf') format('ttf');
-      font-weight: normal;
-      font-style: normal;
-    }
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inconsolata';
-      overflow-x: hidden;
-      color: white;
-      /* text-align: center; */
-    }
-
-    a {
-        color:rgba(255, 223, 70, 0.9);
-        text-decoration: none;
-    }
-
-    /* Background shader container (you'll replace with canvas or shader element) */
-    #background {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background: #0b0220; 
-    }
-
-    #skyCanvas {
-         position: fixed;
-        inset: 0;      /* top:0; right:0; bottom:0; left:0 */
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;   /* BEHIND your content */
-        display: block;
-    }
-
-    /* Foreground silhouettes overlay */
-    #overlay {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: auto;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    /* Navbar */
-    nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        padding: 20px 40px;
-        display: flex;
-        justify-content: space-around; /* evenly spaces links with equal space around */
-        gap: 0; /* remove large fixed gap */
-        z-index: 20;
-        font-size: 1.1rem;
-        letter-spacing: 1px;
-        align-items: center;
-        padding-left: 180px; /* keep space for fixed logo */
-        box-sizing: border-box;
-    }
-
-    .nav-logo {
-    position: fixed; /* fixed so it stays top left */
-    left: 40px;
-    top: 20px;
-    display: flex;
-    align-items: center;
-    height: 60px;
-    }
-
-    .nav-logo img {
-        height: 40px;
-        width: auto;
-        display: block;
-        transition: filter 0.3s ease, box-shadow 0.3s ease;
-
-    }
-
-    .nav-logo img:hover {
-        filter: drop-shadow(0 0 8px yellow);
-    }
-
-
-    .nav-links {
-        display: flex;
-        justify-content: space-between;  /* distribute links evenly across full width */
-        flex-grow: 1;  /* allow nav-links to grow and fill space */
-        margin-left: 40px;  /* spacing after logo */
-        list-style: none;  /* remove bullet points */
-        padding: 0;
-    }
-
-    .nav-links a {
-        color: rgba(255,255,255,0.55);
-        text-decoration: none;
-        transition: 0.2s ease;
-        font-weight: 500;
-        position: relative;
-        padding: 0 10px;  /* optional padding for clickable area */
-    }
-
-    .nav-links a:hover {
-    color: white;
-    }
-
-
-        /* fireflies */
-        .firefly {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: radial-gradient(circle, rgba(255, 223, 70, 0.9) 40%, transparent 80%);
-    border-radius: 50%;
-    filter: blur(3px);
-    opacity: 0.8;
-    animation: flicker 3s infinite alternate;
-  }
-
-  @keyframes flicker {
-    0%, 100% {
-      opacity: 1;
-      transform: translateY(0) translateX(0) scale(1);
-    }
-    50% {
-      opacity: 0.3;
-      transform: translateY(-10px) translateX(5px) scale(1.2);
-    }
-}
-.content-container {
-  max-width: 800px;         /* Limits content width */
-  margin: 120px auto 40px;  /* Centers horizontally & adds top margin to clear fixed nav */
-  padding: 0 40px;          /* Adds horizontal padding */
-  color: white;             /* Ensures text color */
-  text-align: left;         /* Left aligns text inside container */
-  line-height: 1.6;
-  box-sizing: border-box;   /* Includes padding in width */
-}
-
-    /* faq */
-    .faq-item {
-    margin-bottom: 0px;
-    cursor: pointer;
-  }
-  .faq-question::before {
-  content: "+ ";
-  color: #ffd84d; /* Yellow color */
-  font-weight: 700;
-  margin-right: 6px;
-}
-
-  .faq-question {
-    font-weight: 600;
-    font-size: 18px;
-    padding: 0px;
-    background: none;
-    color: white;
-    border-radius: 5px;
-    user-select: none;
-  }
-
-  .faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    background: none;
-    color: #ddd;
-    padding: 0 10px;
-    border-radius: 0 0 5px 5px;
-  }
-  .faq-item.active .faq-answer {
-  max-height: 300px; /* or large enough to show full content */
-  padding: 10px;
-  transition: max-height 0.3s ease, padding 0.3s ease;
-}
-
-        
-  </style>
-
 </head>
 
 <body>
 
-    <script>
-  const fireflyCount = 30; // number of fireflies
-  const body = document.body;
-
-  for (let i = 0; i < fireflyCount; i++) {
-    const firefly = document.createElement('div');
-    firefly.classList.add('firefly');
-
-    // Random initial position
-    firefly.style.top = Math.random() * window.innerHeight + 'px';
-    firefly.style.left = Math.random() * window.innerWidth + 'px';
-
-    // Random animation delay and duration for natural effect
-    firefly.style.animationDelay = (Math.random() * 3) + 's';
-    firefly.style.animationDuration = (2 + Math.random() * 3) + 's';
-
-    body.appendChild(firefly);
-  }
-</script>
+<div id="top-vignette"></div>
 
   <!-- SHADER BACKGROUND (replace with your WebGL canvas) -->
   <div id="background">
     <canvas id="skyCanvas"></canvas>
   </div>
 
-  <!-- NAVIGATION BAR -->
-   <nav>
-        <a href="index.html" class="nav-logo">
-            <img src="images/logo.svg" alt="Logo" />
-        </a>
-        <ul class="nav-links">
-            <a href="info.html">INFO</a>
-            <a href="team.html">TEAM</a>
-            <a href="faq.html">FAQ</a>
-            <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" target="_blank">APPLY</a>
-        </ul>
-    </nav>
+  
+ <div id="navbar-placeholder"></div>
 
-    <div class="content-container">
+<script>
+  fetch('components/navbar.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('navbar-placeholder').innerHTML = data;
+    });
+</script>
+
+<div class="faq-container">
     <div class="faq-item">
   <div class="faq-question">What is the program about?</div>
   <div class="faq-answer">
@@ -360,31 +152,8 @@
   <img id="overlay" src="images/taipei101.png" alt="people sitting on hills" />
 
 </body>
-<script>
-  const canvas = document.getElementById('skyCanvas');
 
-  async function loadShaderSource(url) {
-    const response = await fetch(url);
-    return response.text();
-  }
-
-  async function initShader() {
-    const shaderSource = await loadShaderSource('shader.frag');
-    const sandbox = new glsl.Canvas(canvas);
-    sandbox.load(shaderSource);
-  }
-
-  // On page load, initialize shader
-  window.addEventListener('load', initShader);
-
-  // Resize canvas as before
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-</script>
+ <script src="components/cursor.js"></script>
+<script src="components/glslShader.js" defer></script>
 
 </html>

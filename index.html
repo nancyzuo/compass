@@ -4,254 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/images/compasslogo.png">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="components/fireflies.js" defer></script>
   <title>compass fellowship '26</title>
     <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
 
-
-  <style>
-    @font-face {
-      font-family: 'Inconsolata';
-      src: url('fonts/Inconsolata.ttf') format('ttf');
-      font-weight: normal;
-      font-style: normal;
-    }
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inconsolata';
-      overflow-x: hidden;
-      color: white;
-      text-align: center;
-      cursor: none;
-    }
-
-    /* Background shader container (you'll replace with canvas or shader element) */
-    #background {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background: #0b0220; 
-    }
-
-    #skyCanvas {
-         position: fixed;
-        inset: 0;      /* top:0; right:0; bottom:0; left:0 */
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;   /* BEHIND your content */
-        display: block;
-    }
-
-    /* Foreground silhouettes overlay */
-    #overlay {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: auto;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    /* Navbar */
-    nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        padding: 20px 40px;
-        display: flex;
-        justify-content: space-around; /* evenly spaces links with equal space around */
-        gap: 0; /* remove large fixed gap */
-        z-index: 20;
-        font-size: 1.1rem;
-        letter-spacing: 1px;
-        align-items: center;
-        padding-left: 180px; /* keep space for fixed logo */
-        box-sizing: border-box;
-    }
-
-    .nav-logo {
-    position: fixed; /* fixed so it stays top left */
-    left: 40px;
-    top: 20px;
-    display: flex;
-    align-items: center;
-    height: 60px;
-    }
-
-    .nav-logo img {
-        height: 40px;
-        width: auto;
-        display: block;
-        transition: filter 0.3s ease, box-shadow 0.3s ease;
-
-    }
-
-    .nav-logo img:hover {
-        filter: drop-shadow(0 0 8px yellow);
-    }
-
-
-    .nav-links {
-        display: flex;
-        justify-content: space-between;  /* distribute links evenly across full width */
-        flex-grow: 1;  /* allow nav-links to grow and fill space */
-        margin-left: 40px;  /* spacing after logo */
-        list-style: none;  /* remove bullet points */
-        padding: 0;
-    }
-
-    .nav-links a {
-        color: rgba(255,255,255,0.55);
-        text-decoration: none;
-        transition: 0.2s ease;
-        font-weight: 500;
-        position: relative;
-        padding: 0 10px;  /* optional padding for clickable area */
-    }
-
-    .nav-links a:hover {
-    color: white;
-    cursor: none;
-  
-    }
-
-
-
-
-    
-
-    /* Center star + title */
-    .center-container {
-        
-      margin-top: 20vh;
-    }
-
-    .title-image {
-        display: block;
-        margin: 0 auto;         /* Horizontally center the image */
-        max-width: 75%;       /* Adjust to fit your design */
-        height: auto;
-        margin-bottom: 3%;
-        margin-right: 10%;
-        }
-
-
-
-    .subtitle {
-      font-size: 1rem;
-      margin-bottom: 10px;
-      opacity: 75%;
-    }
-
-    .location {
-      font-size: 1.1rem;
-      color: #ffd84d;
-      margin-bottom: 30px;
-    }
-
-    /* Apply Button */
-    .apply-btn {
-  display: inline-block;
-  background: white;
-  color: black;
-  padding: 14px 34px;
-  border-radius: 25px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  /* Setup initial state for smooth transition */
-  will-change: transform, box-shadow;
-}
-
-.apply-btn:hover {
-  transform: scale(1.05); 
-  box-shadow:
-    0 0 2px 2px #fff94d,
-    0 0 4px 2px #ffe14d,
-    0 0 10px 3px #ce7c17;
-  color: black; /* optional yellow text */
-  cursor: none;
-}
-
-    .apply-deadline {
-        font-size: 0.75rem;
-        color: white;
-        margin-top: 10px;
-        font-weight: 500;
-        letter-spacing: 1px;
-        opacity: 0.3;
-        }
-
-
-        /* fireflies */
-        .firefly {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: radial-gradient(circle, rgba(255, 223, 70, 0.9) 40%, transparent 80%);
-    border-radius: 50%;
-    filter: blur(3px);
-    opacity: 0.8;
-    animation: flicker 3s infinite alternate;
-  }
-
-  @keyframes flicker {
-    0%, 100% {
-      opacity: 1;
-      transform: translateY(0) translateX(0) scale(1);
-    }
-    50% {
-      opacity: 0.3;
-      transform: translateY(-10px) translateX(5px) scale(1.2);
-    }
-
-    
-  }
-  .star {
-    position: fixed;
-    pointer-events: none;
-    color: #fefbd8;
-    font-size: 20px;
-    text-shadow:
-      0 0 5px #ffe600,
-      0 0 10px #ffcc00,
-      0 0 20px #ff9900,
-      0 0 30px #ff6600,
-      0 0 40px #ff3300;
-    user-select: none;
-  }
-        
-  </style>
 
 </head>
 
 <body>
 
 <script>
-  const fireflyCount = 30; // number of fireflies
-  const body = document.body;
-
-  for (let i = 0; i < fireflyCount; i++) {
-    const firefly = document.createElement('div');
-    firefly.classList.add('firefly');
-
-    // Random initial position
-    firefly.style.top = Math.random() * window.innerHeight + 'px';
-    firefly.style.left = Math.random() * window.innerWidth + 'px';
-
-    // Random animation delay and duration for natural effect
-    firefly.style.animationDelay = (Math.random() * 3) + 's';
-    firefly.style.animationDuration = (2 + Math.random() * 3) + 's';
-
-    body.appendChild(firefly);
-  }
+ 
 </script>
 
 
@@ -273,46 +37,24 @@
     <canvas id="skyCanvas"></canvas>
   </div>
   
+  <!-- CURSOR -->
   <div id="star" class="star">✦</div>
 
-  <script>
-  const starChar = '✦'; // Unicode star
+  <!-- NAV BAR -->
+ <div id="navbar-placeholder"></div>
 
-  function createStar(x, y) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.textContent = starChar;
-    star.style.left = x + 'px';
-    star.style.top = y + 'px';
-    document.body.appendChild(star);
-
-    // Animate opacity fade and removal
-    star.animate([{opacity: 1}, {opacity: 0}], {duration: 1000, easing: 'ease-out'});
-    setTimeout(() => {
-      star.remove();
-    }, 1000);
-  }
-
-  window.addEventListener('mousemove', (e) => {
-    createStar(e.clientX, e.clientY);
-  });
+<script>
+  fetch('components/navbar.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('navbar-placeholder').innerHTML = data;
+    });
 </script>
 
+<!-- vignette black background for nav bar -->
+<div id="top-vignette"></div>
 
-  <!-- NAVIGATION BAR -->
-   <nav>
-        <a href="index.html" class="nav-logo">
-            <img src="images/logo.svg" alt="Logo" />
-        </a>
-        <ul class="nav-links">
-            <a href="info.html">INFO</a>
-            <a href="team.html">TEAM</a>
-            <a href="faq.html">FAQ</a>
-            <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" target="_blank">APPLY</a>
-        </ul>
-    </nav>
-
-  <!-- MAIN LOGO + TEXT -->
+  <!-- HOME PAGE TEXT -->
   <div class="center-container">
     <div class="center-container">
     <img src="images/logoname2.png" alt="COMPASS FELLOWSHIP logo title" class="title-image" />
@@ -324,11 +66,11 @@
 
   </div>
 
-  <!-- FIXED FOREGROUND SILHOUETTE OVERLAY -->
+  <!-- PEOPLE AND TAIPEI 101 -->
   <img id="overlay" src="images/taipei101.png" alt="people sitting on hills" />
 
-</body>
 
+<!-- 
 <script>
   const canvas = document.getElementById('skyCanvas');
 
@@ -354,76 +96,11 @@
 
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
-</script>
-
-
-<!-- <script>
-  // Get canvas reference and set its size
-  const canvas = document.getElementById('skyCanvas');
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  // Your GLSL shader as a string
-  const shaderSource = `
-#ifdef GL_ES
-precision mediump float;
-#endif
-
-uniform vec2 u_resolution;
-uniform float u_time;
-
-// Soft vertical gradient matching calm sky
-vec3 calmGradient(float y) {
-    vec3 bottom = vec3(200.0/255.0, 65.0/255.0, 203.0/255.0); // gentle blue-purple
-    vec3 top = vec3(17.0/255.0, 10.0/255.0, 32.0/255.0); // deep indigo
-    // Exaggerate transition for a stronger dark top
-    return mix(bottom, top, pow(y, 0.2));
-}
-
-// Minimal mist at bottom
-vec3 horizonMist(float y) {
-    return vec3(72.0/255.0, 63.0/255.0, 109.0/255.0) * pow(1.0 - y, 3.5) * 0.2;
-}
-
-// Soft micro-star (just a few pixels wide)
-float microStar(vec2 uv, vec2 pos, float r) {
-    float d = length(uv - pos);
-    return smoothstep(r, 0.0, d);
-}
-
-void main() {
-    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-
-    // Calm sky base
-    vec3 col = calmGradient(uv.y);
-
-    // Soft horizon glow (optional, keep light)
-    col += horizonMist(uv.y);
-
-    // Add a *few* tiny soft stars
-    for (float i = 0.0; i < 15.0; i++) {   // very few!
-        vec2 sp = fract(vec2(sin(i*123.44), cos(i*555.88)) * 9999.0 * (0.54+i));
-        sp.y = 0.18 + 0.78 * sp.y;           // restrict vertical spread
-        float st = microStar(uv, sp, 0.002); // much smaller radius
-        float b = 0.3 + 0.3*fract(sin(i*4.42)*1000.21);
-        col += vec3(1.0) * st * b * 0.10;    // very low intensity
-    }
-
-    gl_FragColor = vec4(col, 1.0);
-}
-
-
-
-  `;
-
-  // Initialize shader on canvas
-  const sandbox = new glsl.Canvas(canvas);
-  sandbox.load(shaderSource);
 </script> -->
+  <script src="components/cursor.js"></script>
+  <script src="components/glslShader.js" defer></script>
+
+</body>
 
 
 </html>

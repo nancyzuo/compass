@@ -1,0 +1,359 @@
+@font-face {
+  font-family: 'Inconsolata';
+  src: url('fonts/Inconsolata.ttf') format('truetype'); /* corrected format */
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body and html */
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  font-family: 'Inconsolata', monospace;
+  color: white;
+  text-align: center; /* center content container horizontally */
+  line-height: 1.6;
+  cursor: none;
+}
+
+/* Content container */
+.content-container {
+  max-width: 800px;
+  margin: 7.5vh auto 40px auto;  /* Top margin responsive, horizontal center */
+  padding: 0 40px;
+  color: white;
+  text-align: left;  /* Inner text left aligned */
+  box-sizing: border-box;
+}
+
+
+/* Typography */
+h1, h2 {
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  padding-bottom: 8px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.3rem;
+  margin-top: 30px;
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #c4c4c4;
+}
+
+.note {
+  font-size: 0.9rem;
+  color: #777;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* Background shader container */
+#background {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: #0b0220;
+}
+
+/* Shader Canvas */
+#skyCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  display: block;
+}
+
+/* Foreground overlay */
+#overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 10;
+  pointer-events: none;
+}
+
+ /* Subtle top black vignette overlay */
+    #top-vignette {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100px; /* Adjust height to cover navbar + some fade */
+        pointer-events: none; /* So clicks pass through */
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), transparent);
+        z-index: 19; /* Just below navbar z-index (20) */
+    }
+
+/* Navbar styles */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-around;
+  gap: 0;
+  z-index: 20;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  align-items: center;
+  padding-left: 180px;
+  box-sizing: border-box;
+}
+
+.nav-logo {
+  position: fixed;
+  left: 40px;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
+.nav-logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+  transition: filter 0.3s ease, box-shadow 0.3s ease;
+}
+.nav-logo img:hover {
+  filter: drop-shadow(0 0 8px yellow);
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin-left: 40px;
+  list-style: none;
+  padding: 0;
+}
+
+.nav-links a {
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.3s ease;
+  font-weight: 500;
+  position: relative;
+  padding: 0 10px;
+}
+
+.nav-links a:hover:not(.apply-btn) {
+  color: white;
+  cursor: none;
+  text-shadow:
+    0 0 5px white,
+    0 0 10px white,
+    0 0 15px white;
+}
+
+/* Apply button in navbar and main */
+.apply-btn {
+  display: inline-block;
+  background: white;
+  color: black;
+  padding: 14px 34px;
+  border-radius: 25px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
+  will-change: transform, box-shadow, color;
+  margin-left: 10px;
+}
+
+.apply-btn:hover {
+  transform: scale(1.05); 
+  box-shadow:
+    0 0 2px 2px #fff94d,
+    0 0 4px 2px #ffe14d,
+    0 0 10px 3px #ce7c17;
+  color: black;
+  cursor: pointer;
+}
+.nav-links a.apply-btn {
+  display: inline-block;
+  background: white;
+  color: black;
+  padding: 10px 28px; /* slightly smaller padding for navbar */
+  border-radius: 25px;
+  font-size: 1rem; /* adjust font size to fit navbar */
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  will-change: transform, box-shadow;
+  margin-left: 10px; /* spacing from other links */
+}
+
+.nav-links a.apply-btn:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 2px 2px #fff94d,
+    0 0 4px 2px #ffe14d,
+    0 0 10px 3px #ce7c17;
+  color: black;
+  cursor: pointer;
+}
+
+
+/* Center container */
+.center-container {
+  margin-top: 20vh;
+}
+
+/* Title image */
+.title-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 75%;
+  height: auto;
+  margin-bottom: 3%;
+  margin-right: 10%;
+}
+
+/* Subtitle and location styles */
+.subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.location {
+  font-size: 1.4rem;
+  color: #ffd84d;
+  margin-bottom: 30px;
+}
+
+/* Apply deadline text */
+.apply-deadline {
+  font-size: 0.75rem;
+  color: white;
+  margin-top: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  opacity: 0.3;
+}
+
+/* Fireflies */
+.firefly {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, rgba(255, 223, 70, 0.9) 40%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(3px);
+  opacity: 0.8;
+  animation: flicker 3s infinite alternate;
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translateY(-10px) translateX(5px) scale(1.2);
+  }
+}
+
+/* Star for mouse effect */
+.star {
+  position: fixed;
+  pointer-events: none;
+  color: #fefbd8;
+  font-size: 20px;
+  text-shadow:
+    0 0 5px #ffe600,
+    0 0 10px #ffcc00,
+    0 0 20px #ff9900,
+    0 0 30px #ff6600,
+    0 0 40px #ff3300;
+  user-select: none;
+}
+
+/* Blurry transition */
+.blurry {
+  transition: filter 0.3s, opacity 0.3s;
+}
+
+
+
+/* faq */
+
+    a {
+        color:rgba(255, 223, 70, 0.9);
+        text-decoration: none;
+    }
+
+    .faq-container {
+        max-width: 800px;
+        margin: 12vh auto 40px auto;  /* Top margin responsive, horizontal center */
+        padding: 20px 40px 0 40px;
+        padding: 0 40px;
+        color: white;
+        text-align: left;  /* Inner text left aligned */
+        box-sizing: border-box;
+    }
+
+
+
+    /* faq */
+    .faq-item {
+    margin-bottom: 0px;
+    cursor: pointer;
+  }
+  .faq-question::before {
+  content: "+ ";
+  color: #ffd84d; /* Yellow color */
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+  .faq-question {
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0px;
+    background: none;
+    color: white;
+    border-radius: 5px;
+    user-select: none;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: none;
+    color: #ddd;
+    padding: 0 10px;
+    border-radius: 0 0 5px 5px;
+  }
+  .faq-item.active .faq-answer {
+  max-height: 300px; /* or large enough to show full content */
+  padding: 10px;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
