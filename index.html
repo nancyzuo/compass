@@ -37,9 +37,6 @@
     <canvas id="skyCanvas"></canvas>
   </div>
   
-  <!-- CURSOR -->
-  <div id="star" class="star">✦</div>
-
   <!-- NAV BAR -->
  <div id="navbar-placeholder"></div>
 
@@ -62,42 +59,16 @@
     <div class="location">Wenshan District, Taipei</div>
     <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" target="_blank" class="apply-btn">APPLY</a>
     <div class="apply-deadline"><i>by jan 10 2026</i></div>
- 
-
+  </div>
   </div>
 
   <!-- PEOPLE AND TAIPEI 101 -->
   <img id="overlay" src="images/taipei101.png" alt="people sitting on hills" />
 
 
-<!-- 
-<script>
-  const canvas = document.getElementById('skyCanvas');
-
-  async function loadShaderSource(url) {
-    const response = await fetch(url);
-    return response.text();
-  }
-
-  async function initShader() {
-    const shaderSource = await loadShaderSource('shader.frag');
-    const sandbox = new glsl.Canvas(canvas);
-    sandbox.load(shaderSource);
-  }
-
-  // On page load, initialize shader
-  window.addEventListener('load', initShader);
-
-  // Resize canvas as before
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-</script> -->
+  <!-- CUSTOM CURSOR SCRIPT -->
   <script src="components/cursor.js"></script>
+  <!-- BACKGROUND SCRIPT -->
   <script src="components/glslShader.js" defer></script>
 
 </body>
