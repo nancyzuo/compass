@@ -26,7 +26,7 @@
       font-family: 'Inconsolata';
       overflow-x: hidden;
       color: white;
-      text-align: center;
+      /* text-align: center; */
     }
 
     a {
@@ -124,65 +124,6 @@
     }
 
 
-
-
-    
-
-    /* Center star + title */
-    .center-container {
-        
-      margin-top: 20vh;
-    }
-
-    .title-image {
-        display: block;
-        margin: 0 auto;         /* Horizontally center the image */
-        max-width: 75%;       /* Adjust to fit your design */
-        height: auto;
-        margin-bottom: 3%;
-        margin-right: 10%;
-        }
-
-
-
-    .subtitle {
-      font-size: 1.3rem;
-      margin-bottom: 8px;
-    }
-
-    .location {
-      font-size: 1.4rem;
-      color: #ffd84d;
-      margin-bottom: 30px;
-    }
-
-    /* Apply Button */
-    .apply-btn {
-      display: inline-block;
-      background: white;
-      color: black;
-      padding: 14px 34px;
-      border-radius: 25px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: 0.2s ease;
-    }
-
-    .apply-btn:hover {
-      transform: scale(1.05);
-    }
-
-    .apply-deadline {
-        font-size: 0.75rem;
-        color: white;
-        margin-top: 10px;
-        font-weight: 500;
-        letter-spacing: 1px;
-        opacity: 0.3;
-        }
-
-
         /* fireflies */
         .firefly {
     position: absolute;
@@ -220,6 +161,12 @@
     margin-bottom: 0px;
     cursor: pointer;
   }
+  .faq-question::before {
+  content: "+ ";
+  color: #ffd84d; /* Yellow color */
+  font-weight: 700;
+  margin-right: 6px;
+}
 
   .faq-question {
     font-weight: 600;
@@ -287,34 +234,34 @@
             <a href="info.html">INFO</a>
             <a href="team.html">TEAM</a>
             <a href="faq.html">FAQ</a>
-            <a href="https://google.com" target="_blank">APPLY</a>
+            <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" target="_blank">APPLY</a>
         </ul>
     </nav>
 
     <div class="content-container">
     <div class="faq-item">
-  <div class="faq-question"> + What is the program about?</div>
+  <div class="faq-question">What is the program about?</div>
   <div class="faq-answer">
     <p>The program explores frameworks from economics, cognitive science, philosophy, and more, combined with workshops and guest speakers.</p>
   </div>
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ Who is the program for?</div>
+  <div class="faq-question">Who is the program for?</div>
   <div class="faq-answer">
     <p>University students or 18-23 year olds, primarily from Taiwan, interested in interdisciplinary inquiry.</p>
   </div>
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ Where will the program be held?</div>
+  <div class="faq-question">Where will the program be held?</div>
   <div class="faq-answer">
     <p>The Compass Fellowship Program will be hosted in Taipei at the <a href="https://9floor.co/en/coliving" target="_blank">9Floor CoLiving Space</a> near Wenshan District.</p>
   </div>
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ When will the programs be held?</div>
+  <div class="faq-question">When will the programs be held?</div>
   <div class="faq-answer">
     <p>There will be two runs of the program, for 5 days each.</p>
     <ul>
@@ -325,7 +272,7 @@
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ Eligibility and who are we looking for?</div>
+  <div class="faq-question">Eligibility and who are we looking for?</div>
   <div class="faq-answer">
     <p>The Compass Fellowship is for curious and ambitious university students interested in reflecting and exploring greater breadth and depth in understanding themselves and the world.</p>
     <p>We accept university students (or those of age 18-23), particularly for those in Taiwan, accepting about 20 students for each cohort.</p>
@@ -334,7 +281,7 @@
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ How much will it cost to attend the program?</div>
+  <div class="faq-question">How much will it cost to attend the program?</div>
   <div class="faq-answer">
     <p>We are interested in forming the best possible cohort. To this end, the program will be free to attend and includes meals and accommodation.</p>
     <p>Need-based scholarships to cover the cost of travel are available.</p>
@@ -342,14 +289,14 @@
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ I am not in Taiwan, can I still apply?</div>
+  <div class="faq-question">I am not in Taiwan, can I still apply?</div>
   <div class="faq-answer">
     <p>To compose an exceptional cohort with diverse backgrounds and views, we also accept international applicants.</p>
   </div>
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ How does the admission process work?</div>
+  <div class="faq-question">How does the admission process work?</div>
   <div class="faq-answer">
     <p>Our admissions will be run in two stages. First will be the written application.</p>
     <p>Admissions will be running from mid November to early January on a rolling basis.</p>
@@ -357,14 +304,14 @@
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ How is the Compass Fellowship funded?</div>
+  <div class="faq-question">How is the Compass Fellowship funded?</div>
   <div class="faq-answer">
     <p>The Compass Fellowship is generously funded by Emergent Ventures and <a href="http://sparc.camp" target="_blank">SPARC</a>.</p>
   </div>
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ Who are the people running this program?</div>
+  <div class="faq-question">Who are the people running this program?</div>
   <div class="faq-answer">
     <p>We have gathered an exceptionally accomplished staff team including graduates of Harvard and MIT with wide ranging work and life experiences from academic research, venture capital, startups, and more.</p>
     <p>You can learn more about us on the <a href="team.html">team page</a>.</p>
@@ -372,7 +319,7 @@
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ Why are you running this program?</div>
+  <div class="faq-question">Why are you running this program?</div>
   <div class="faq-answer">
     <p>The program is inspired by programs like <a href="http://sparc.camp" target="_blank">SPARC</a>, which has been operating since 2012.</p>
     <p>We think the ability to model the world, introspect on one’s own experience, and implement one’s vision are all crucial, yet often neglected, skills in one’s education. There is much room for expressing interesting and effective means of honing these skills and we are particularly interested in how this could work in an East Asian context.</p>
@@ -380,7 +327,7 @@
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ Will this program be run in English?</div>
+  <div class="faq-question">Will this program be run in English?</div>
   <div class="faq-answer">
     <p>The program will be run in English. Though most staff members are proficient in Chinese. It is recommended that you are comfortable in an English speaking environment.</p>
     <p>That said, if you are interested in applying, we strongly encourage you to do so, even if you might not be sure your English isn’t up to par! We are looking for participants with high willingness to participate, not perfect English abilities.</p>
@@ -388,7 +335,7 @@
 </div>
 
 <div class="faq-item">
-  <div class="faq-question">+ How do I apply?</div>
+  <div class="faq-question">How do I apply?</div>
   <div class="faq-answer">
     <p>You can <a href="apply.html">apply here</a>, starting November 15, 2026!</p>
     <p>Application closes January 10, 2026.</p>
