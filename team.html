@@ -2,124 +2,280 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="/images/compasslogo.png">
-   <link rel="stylesheet" href="styles.css" />
-   <script src="components/fireflies.js" defer></script>
-  <title>compass fellowship '26</title>
-    <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="/images/compasslogo.png" />
+  <title>Compass Fellowship '26 - Team</title>
 
+  <link rel="stylesheet" href="styles.css" />
+  <script src="components/fireflies.js" defer></script>
+  <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
 
   <style>
-  
+    body {
+      font-family: 'Inconsolata', monospace;
+      background: #0b0220;
+      color: white;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
 
-  .team-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
+    /* Your existing vignette and shader areas */
+    #top-vignette {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+      z-index: 19;
+    }
 
-  .team-member {
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
+    #background {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+    }
+    #skyCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      display: block;
+    }
 
-  .team-member img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.3s ease;
-  }
+    #overlay {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: 10;
+      pointer-events: none;
+    }
 
-  .team-member:hover img {
-    transform: scale(1.1);
-  }
+    /* Navbar placeholder loaded dynamically */
+    #navbar-placeholder {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 20;
+      width: 100%;
+    }
 
-  .member-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.75);
-    color: white;
-    padding: 15px;
-    opacity: 0;
-    transform: translateY(100%);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
+    /* Team container grid */
+    .team-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 25px;
+      max-width: 1000px;
+      margin: 100px 0px 0px 0px; /* margin-top to avoid nav */
+      z-index: 21;
+      position: relative;
+    }
 
-  .team-member:hover .member-info {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    .team-member {
+      cursor: pointer;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
 
-  .member-name {
-    font-weight: bold;
-    margin-bottom: 5px;
-    font-size: 1.1rem;
-  }
 
-  .member-bio {
-    font-size: 0.9rem;
-    line-height: 1.3;
-  }
-        
+    .team-member img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      margin-bottom: 10px;
+      pointer-events: none; /* so clicks are detected on container */
+      filter: grayscale(100%);
+    }
+
+
+
+    .member-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    /* Modal styling */
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    #modal.active {
+      display: flex;
+    }
+    #modal-content {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: left;
+      position: relative;
+    }
+    #modal-content img {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      display: none;
+      
+    }
+    #modal-content h2 {
+      margin: 0 0 15px 0;
+      font-size: 2rem;
+    }
+    #modal-content p {
+      font-size: 1.2rem;
+      line-height: 1.5;
+    }
+    #modal-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 28px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+    }
+    #modal-close:hover {
+      color: #ffd84d;
+    }
+
+    /* Responsive grid adjustments */
+    @media (max-width: 768px) {
+      .team-container {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        margin-top: 110px;
+      }
+      #modal-content img {
+        width: 90vw;
+        height: auto;
+      }
+    }
   </style>
-
 </head>
-
 <body>
 
-  
-<div id="top-vignette"></div>
-  <!-- SHADER BACKGROUND (replace with your WebGL canvas) -->
+  <div id="top-vignette"></div>
+
   <div id="background">
     <canvas id="skyCanvas"></canvas>
   </div>
 
-  
- <div id="navbar-placeholder"></div>
+  <div id="navbar-placeholder"></div>
 
-<script>
-  fetch('components/navbar.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('navbar-placeholder').innerHTML = data;
-    });
-</script>
+  <script>
+    fetch('components/navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-placeholder').innerHTML = data;
+      });
+  </script>
 
-
-
-  <!-- FIXED FOREGROUND SILHOUETTE OVERLAY -->
   <img id="overlay" src="images/taipei101.png" alt="people sitting on hills" />
 
-    <div class="team-container">
-  <div class="team-member">
-    <img src="images/nancyheadshot.png" alt="nancy zuo" />
-    <div class="member-info">
-      <div class="member-name">Nancy Zuo</div>
-      <div class="member-bio">hello world</div>
-    </div>
-  </div>
-
-  <div class="team-member">
-    <img src="images/member2.jpg"/>
-    <div class="member-info">
+  <!-- Team grid -->
+  <div class="team-container" id="team-container">
+    <div class="team-member" data-name="David Yu" data-bio="David is doing research in scalable collaborative cultures – how we can design better ecosystems for humanity to solve some of the largest social-technical problems facing us today. In the past, he has spent 5 years in tech startups as a director of growth at one, and an anthropologist at another. He is interested in complexity theory, organizational theory, and philosophy. His current pet project is creating a watch collection that he assembles himself." data-img="images/headshots/davidyu.jpg">
+      <img src="images/headshots/davidyu.jpg" alt="David Yu" />
       <div class="member-name">David Yu</div>
-      <div class="member-bio">hello world</div>
+    </div>
+
+    <div class="team-member" data-name="Caleb Rak" data-bio="Caleb graduated from Harvard with a degree in Comparative Literature and Linguistics. He has helped organize various conferences and workshops in different countries for the past few years and is currently head of events and operations at a nonprofit. He is interested in comparative philosophy, ecological history, and linguistics. Caleb can speak English, French, and Chinese, grows most of the vegetables he eats, and enjoys drinking tea." data-img="images/headshots/calebrak.png">
+      <img src="images/headshots/calebrak.png" alt="Caleb Rak" />
+      <div class="member-name">Caleb Rak</div>
+    </div>
+
+    <div class="team-member" data-name="Ofer Grossman" data-bio="Ofer Grossman has a PhD from MIT in theoretical computer science, and works as a mathematical consultant. He's broadly interested in science, languages, spending time outdoors, and freediving." data-img="images/headshots/ofergrossman.jpeg">
+      <img src="images/headshots/ofergrossman.jpeg" alt="Ofer Grossman" />
+      <div class="member-name">Ofer Grossman</div>
+    </div>
+
+    <div class="team-member" data-name="Nancy Zuo" data-bio="Nancy graduated from Carnegie Mellon with a degree in Digital Immersive Storytelling. She's interested in how humans share stories and connect with each other. She likes to draw, make videos, watch musicals, and sew." data-img="images/headshots/nancyzuo.png">
+      <img src="images/headshots/nancyzuo.png" alt="Nancy Zuo" />
+      <div class="member-name">Nancy Zuo</div>
+    </div>
+
+    <div class="team-member" data-name="Chelsea Guo" data-bio="Chelsea is a researcher at Sutter Hill Ventures, supporting several startups with recruiting and strategic projects. She is proud to give people opportunities that could change the trajectory of their lives. Previous versions of Chelsea were dedicated to leading afterschool programs in Boston’s Chinatown and matchmaking events at universities across the US. She studied Sociology and Educational Studies at Harvard." data-img="images/headshots/chelseaguo.jpeg">
+      <img src="images/headshots/chelseaguo.jpeg" alt="Chelsea Guo" />
+      <div class="member-name">Chelsea Guo</div>
     </div>
   </div>
 
-
-</body>
+  <!-- Modal -->
+  <div id="modal">
+    <div id="modal-close">&times;</div>
+    <div id="modal-content">
+      <img src="" alt="Team Member Photo" id="modal-img" />
+      <h2 id="modal-name"></h2>
+      <p id="modal-bio"></p>
+    </div>
+  </div>
 
   <script src="components/glslShader.js" defer></script>
- <script src="components/cursor.js"></script>
+  <script src="components/cursor.js"></script>
 
+  <script>
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalName = document.getElementById('modal-name');
+    const modalBio = document.getElementById('modal-bio');
+    const modalClose = document.getElementById('modal-close');
+
+    function showModal(member) {
+      const name = member.getAttribute('data-name');
+      const bio = member.getAttribute('data-bio');
+      const img = member.getAttribute('data-img');
+
+      modalName.textContent = name;
+      modalBio.textContent = bio;
+      modalImg.src = img;
+      modalImg.alt = name;
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.team-member').forEach(member => {
+      member.addEventListener('click', () => showModal(member));
+    });
+
+    modalClose.addEventListener('click', hideModal);
+    modal.addEventListener('click', e => {
+      if (e.target === modal) hideModal();
+    });
+
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape') hideModal();
+    });
+  </script>
+</body>
 </html>
