@@ -21,14 +21,23 @@
       padding: 0;
       box-sizing: border-box;
     }
+
+    body, html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center; /* horizontal center */
+        color: white;
+    }
+
     .content-container {
         max-width: 800px;
-        margin: 120px auto 40px auto; /* Top margin to clear fixed nav height + padding */
+        margin: 7.5vh auto 40px auto; 
         padding: 0 40px; /* Left-right padding to line up with nav */
         color: white;
         text-align: left;
         line-height: 1.6;
-        
+        margin-top: 100px;
     }
 
     body {
@@ -37,10 +46,10 @@
       color: white;
       text-align: center;
        max-width: 800px;
-       
         line-height: 1.6;
         text-align: left;
     }
+    
 
 
 h1, h2 {
@@ -72,9 +81,6 @@ p {
   color: #777;
   font-style: italic;
   margin-top: 10px;
-  border-left: 3px solid #f7c948;
-  padding-left: 10px;
-  max-width: 600px;
 }
 
 
@@ -249,6 +255,9 @@ p {
       transform: translateY(-10px) translateX(5px) scale(1.2);
     }
   }
+    .blurry {
+        transition: filter 0.3s, opacity 0.3s;
+    }
 
         
   </style>
@@ -294,7 +303,7 @@ p {
             <a href="https://google.com" target="_blank">APPLY</a>
         </ul>
     </nav>
-
+    
     <div class="content-container">
         <p>The Compass Fellowship brings together curious and ambitious youths interested in reflecting, exploring, and changing themselves and the world with instructors with accomplished yet diverse life experiences. We seek to create an immersive experience emphasizing discussions and dialogue, exploring concepts in cognitive science and economics to practical elements of meditation, and more. It is a 5 day live-in program, hosted in Taipei, running twice: Jan 24 – Jan 28 & Feb 1 – Feb 5. The program is free to attend with meals and stay covered. Admissions begin November 15 and are run on a rolling basis. </p>
 
@@ -312,12 +321,49 @@ p {
         <h2>Who This Is For</h2>
         <p>Those currently in university or between 18-23 years old, primarily from Taiwan. The cohort will have a broad range of interests and pursuits to form an interdisciplinary environment. To this end we are looking for applicants to demonstrate an interest and/or capacity for open and curious inquiry, model that which is familiar and unfamiliar, and introspective awareness. There are no other hard requirements like GPA or being in a particular major. Comfort with mathematics is recommended, but not a prerequisite. Two cohorts of ~20 students each. The program is free to attend, with meal and stay covered.</p>
         
-        <p class="note">*Note that the program will be run in English, but most staff are proficient in Chinese.*</p>
+        <p class="note">Note that the program will be run in English, but most staff are proficient in Chinese.</p>
+        <div style="height: 350px;"></div> 
     </div>
 
 
   <!-- FIXED FOREGROUND SILHOUETTE OVERLAY -->
   <img id="overlay" src="images/taipei101.png" alt="people sitting on hills" />
+
+<script>
+function updateBlurOnScroll() {
+  const viewportHeight = window.innerHeight;
+  document.querySelectorAll('.content-container p, .content-container .note, .content-container h2').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const elCenter = rect.top + rect.height / 2;
+
+    // We want blur to start only after the middle of the viewport, so:
+    // If element is in top half (elCenter < viewportHeight * 0.5), no blur
+    if (elCenter < viewportHeight * 0.5) {
+      el.style.filter = 'blur(0px)';
+      return;
+    }
+
+    // Otherwise, calculate distance from 50% viewport height going down to bottom
+    let distanceFromMid = elCenter - viewportHeight * 0.5;
+    let maxDistance = viewportHeight * 0.5;
+    let maxBlur = 3;
+
+    // Normalize distance to [0,1]
+    let normDist = Math.min(distanceFromMid / maxDistance, 1);
+
+    // Use sqrt for smooth gradual increase
+    let blurStrength = Math.sqrt(normDist) * maxBlur;
+
+    el.style.filter = `blur(${blurStrength}px)`;
+  });
+}
+
+window.addEventListener('scroll', updateBlurOnScroll);
+window.addEventListener('resize', updateBlurOnScroll);
+window.addEventListener('DOMContentLoaded', updateBlurOnScroll);
+</script>
+
+
 
 </body>
 
