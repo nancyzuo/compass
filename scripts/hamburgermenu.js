@@ -1,4 +1,4 @@
-import { waitForElement } from "./common.js"
+import { waitForElement } from "./common.js";
 
 waitForElement("nav-toggle-button", (navToggle) => {
   const overlay = document.getElementById("mobile-menu-overlay");

@@ -24,6 +24,19 @@ function createStar(x, y) {
 }
 
 // Listen for mousemove events to create stars following the cursor
+let lastTime = 0;
+
 window.addEventListener("mousemove", (e) => {
   createStar(e.clientX, e.clientY);
 });
+
+//star movement for slow computers
+
+// window.addEventListener("mousemove", (e) => {
+//   const now = Date.now();
+//   if (now - lastTime > 50) {
+//     // create star at most every 50ms
+//     createStar(e.clientX, e.clientY);
+//     lastTime = now;
+//   }
+// });
