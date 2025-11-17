@@ -4,487 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/images/compasslogo.png">
+  <link rel="stylesheet" href="/css/styles.css" />
   <script src="/scripts/fireflies.js" defer></script>
+  <script src="/scripts/language_toggle.js" defer></script> 
   <title>compass fellowship '26</title>
     <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
-
-
-  <style>
-    @font-face {
-      font-family: 'Inconsolata';
-      src: url('/fonts/Inconsolata.ttf') format('ttf');
-      font-weight: normal;
-      font-style: normal;
-    }
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body, html {
-        height: 100%;
-        margin: 0;
-        display: flex;
-        justify-content: center; /* horizontal center */
-        font-family: 'Inconsolata', monospace;
-        color: white;
-    }
-
-    .content-container {
-        max-width: 800px;
-        margin: 7.5vh auto 40px auto; 
-        padding: 0 40px; /* Left-right padding to line up with nav */
-        color: white;
-        text-align: left;
-        line-height: 1.6;
-        margin-top: 100px;
-    }
-
-    body {
-      overflow-x: hidden;
-      color: white;
-      text-align: center;
-       max-width: 800px;
-        line-height: 1.6;
-        text-align: left;
-    }
-    
-
-
-h1, h2 {
-  color: #ffffff;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
-
-h1 {
-  font-size: 1.8rem; /* smaller title */
-  padding-bottom: 8px;
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
-
-h2 {
-  font-size: 1.3rem; /* smaller subtitle */
-  margin-top: 30px;
-}
-
-p {
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-  color: #c4c4c4;
-}
-
-.note {
-  font-size: 0.9rem;
-  color: #777;
-  font-style: italic;
-  margin-top: 10px;
-}
-
-
-    /* Background shader container (you'll replace with canvas or shader element) */
-    #background {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background: #0b0220; 
-    }
-
-    #skyCanvas {
-         position: fixed;
-        inset: 0;      /* top:0; right:0; bottom:0; left:0 */
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;   /* BEHIND your content */
-        display: block;
-    }
-
-    /* Foreground silhouettes overlay */
-    #overlay {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: auto;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    /* Subtle top black vignette overlay */
-    #top-vignette {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100px; /* Adjust height to cover navbar + some fade */
-        pointer-events: none; /* So clicks pass through */
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), transparent);
-        z-index: 19; /* Just below navbar z-index (20) */
-    }
-
-
-    /* Navbar */
-    nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        padding: 20px 40px;
-        display: flex;
-        justify-content: space-around; /* evenly spaces links with equal space around */
-        gap: 0; /* remove large fixed gap */
-        z-index: 20;
-        font-size: 1.1rem;
-        letter-spacing: 1px;
-        align-items: center;
-        padding-left: 180px; /* keep space for fixed logo */
-        box-sizing: border-box;
-    }
-
-    .nav-logo {
-    position: fixed; /* fixed so it stays top left */
-    left: 40px;
-    top: 20px;
-    display: flex;
-    align-items: center;
-    height: 60px;
-    }
-
-    .nav-logo img {
-        height: 40px;
-        width: auto;
-        display: block;
-        transition: filter 0.3s ease, box-shadow 0.3s ease;
-
-    }
-
-    .nav-logo img:hover {
-        filter: drop-shadow(0 0 8px yellow);
-    }
-
-
-    .nav-links {
-        display: flex;
-        justify-content: space-between;  /* distribute links evenly across full width */
-        flex-grow: 1;  /* allow nav-links to grow and fill space */
-        margin-left: 40px;  /* spacing after logo */
-        list-style: none;  /* remove bullet points */
-        padding: 0;
-    }
-
-    .nav-links a {
-        color: rgba(255,255,255,0.55);
-        text-decoration: none;
-        transition: 0.2s ease;
-        font-weight: 500;
-        position: relative;
-        padding: 0 10px;  /* optional padding for clickable area */
-    }
-
-    .nav-links a:hover {
-    color: white;
-    }
-
-
-    /* Center star + title */
-    .center-container {
-        
-      margin-top: 20vh;
-    }
-
-    .title-image {
-        display: block;
-        margin: 0 auto;         /* Horizontally center the image */
-        max-width: 75%;       /* Adjust to fit your design */
-        height: auto;
-        margin-bottom: 3%;
-        margin-right: 10%;
-        }
-
-
-
-    .subtitle {
-      font-size: 1.3rem;
-      margin-bottom: 8px;
-    }
-
-    .location {
-      font-size: 1.4rem;
-      color: #ffd84d;
-      margin-bottom: 30px;
-    }
-
-    /* Apply Button */
-    .apply-btn {
-      display: inline-block;
-      background: white;
-      color: black;
-      padding: 14px 34px;
-      border-radius: 25px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: 0.2s ease;
-    }
-
-    .apply-btn:hover {
-      transform: scale(1.05);
-    }
-    
-
- .nav-links a.apply-btn {
-  display: inline-block;
-  background: white;
-  color: black;
-  padding: 10px 28px; /* slightly smaller padding for navbar */
-  border-radius: 25px;
-  font-size: 1rem; /* adjust font size to fit navbar */
-  font-weight: 600;
-  text-decoration: none;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  will-change: transform, box-shadow;
-  margin-left: 10px; /* spacing from other links */
-}
-
-.nav-links a.apply-btn:hover {
-  transform: scale(1.05);
-  box-shadow:
-    0 0 2px 2px #fff94d,
-    0 0 4px 2px #ffe14d,
-    0 0 10px 3px #ce7c17;
-  color: black;
-  cursor: pointer;
-}
-
-
-    /* fireflies */
-    .firefly {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: radial-gradient(circle, rgba(255, 223, 70, 0.9) 40%, transparent 80%);
-    border-radius: 50%;
-    filter: blur(3px);
-    opacity: 0.8;
-    animation: flicker 3s infinite alternate;
-  }
-
-  @keyframes flicker {
-    0%, 100% {
-      opacity: 1;
-      transform: translateY(0) translateX(0) scale(1);
-    }
-    50% {
-      opacity: 0.3;
-      transform: translateY(-10px) translateX(5px) scale(1.2);
-    }
-  }
-    .blurry {
-        transition: filter 0.3s, opacity 0.3s;
-    }
-
-     .highlight {
-    color: #ffd84d; /* change to any color you like */
-    font-weight: bold; /* optional for emphasis */
-  }
-
-
-
-  #nav-toggle-button,
-#mobile-menu-overlay {
-  display: none;
-}
-
-.sponsor-heading {
-  font-size: 0.9rem;
-  color: white;
-  text-align: center;
-  margin-top: 40px;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-
-.sponsors {
-  display: flex;
-  justify-content: center; /* center horizontally */
-  align-items: center;     /* align vertically if heights differ */
-  gap: 40px;               /* space between logos */
-  margin-top: 5px;        /* space above sponsors section */
-}
-
-/* Responsive logo sizes */
-.sponsor-logo {
-  max-height: 80px;        /* limit logo height */
-  width: auto;
-  display: block;
-  opacity: 50%;
-  transition: opacity 0.3s ease;
-}
-
-.sponsor-logo:hover {
-  opacity: 1; /* fully opaque on hover */
-  cursor: pointer;
-}
-
-
-
-
-
-
-
-/* MEDIA SIZE FOR RESPONSIVE LAYOUT */
-/* Responsive tweaks below 768px width */
-@media (max-width: 768px) {
-  .center-container {
-    padding: 10px;
-    max-width: 95%;
-  }
-  
-  .title-image {
-    max-width: 90vw; /* almost full width on small screens */
-  }
-  
-  .subtitle, .location, .apply-deadline {
-    font-size: 1rem;
-  }
-  
-  .apply-btn {
-    padding: 10px 18px;
-    font-size: 1rem;
-  }
-
-
-
-}
-
-/* Extra small devices (phones, 480px and down) */
-@media (max-width: 480px) {
-
-    nav {
-        display: none;
-    }
-  .subtitle, .location, .apply-deadline {
-    font-size: 0.9rem;
-  }
-
-   #nav-toggle-button,
-  #mobile-menu-overlay {
-    display: block;
-  }
-
- #mobile-menu-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.8); /* near-black full background */
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  z-index: 11000; /* above all content except toggle */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 40px;
-  font-size: 2rem;
-  color: white;
-  text-align: center;
-  padding: 40px;
-}
-
-/* Show overlay and menu */
-#mobile-menu-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.menu-link {
-  color: white;
-  text-decoration: none;
-  font-weight: 700;
-  padding: 15px 30px;
-  border-radius: 12px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.menu-link:hover {
-  background-color: #ffd84d;
-  color: black;
-  cursor: pointer;
-}
-
-.menu-link.apply-btn {
-  background-color: white;
-  color: black;
-  font-size: 1.5rem;
-  padding: 15px 40px;
-  margin-top: 40px;
-}
-
-.menu-link.apply-btn:hover {
-  background-color: #ffe14d;
-  color: black;
-}
-
-
-
-/* Nav container stacking vertically for mobile */
-#navbar-placeholder {
-  position: fixed;
-  top: 0;
-  right: 0;
-  background: #0b0220; /* Match page background or use translucent */
-  width: 200px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
-  padding: 40px 20px 20px 20px;
-  box-shadow: -2px 0 15px rgba(0,0,0,0.7);
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  z-index: 10999; /* above overlay */
-}
-
-/* Show menu sliding from right */
-#navbar-placeholder.active {
-  transform: translateX(0);
-}
-
-/* Style nav links */
-#navbar-placeholder a {
-  color: white;
-  font-weight: 600;
-  padding: 8px 12px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-/* Hamburger or "+" toggle button */
-#nav-toggle-button {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 11001; /* above star and overlay */
-  background: transparent;
-  border: none;
-  font-size: 2rem;
-  color: white;
-  cursor: pointer;
-    
-
-} 
-
-        
-  </style>
-
 </head>
 
 <body>
@@ -496,18 +20,14 @@ p {
     <canvas id="skyCanvas"></canvas>
   </div>
 
-
-  <nav>
-        <a href="index.html" class="nav-logo">
-            <img src="/images/logo.svg" alt="Logo" />
-        </a>
-        <ul class="nav-links">
-            <a href="info.html">INFO</a>
-            <a href="team.html">TEAM</a>
-            <a href="faq.html">FAQ</a>
-            <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" target="_blank" class="apply-btn">APPLY</a>
-        </ul>
-    </nav>
+  <div id="navbar-placeholder"></div>
+  <script>
+    fetch('components/navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-placeholder').innerHTML = data;
+      });
+  </script>
 
      <!-- FOR MOBILE NAV BAR -->
     <button id="nav-toggle-button" aria-label="Toggle navigation menu">☰</button>
@@ -520,21 +40,21 @@ p {
     </div>
         
     <div class="content-container">
-        <p><span class="highlight">The Compass Fellowship</span> brings together curious and ambitious youths interested in reflecting, exploring, and changing themselves and the world with instructors with accomplished yet diverse life experiences. We seek to create an immersive experience emphasizing discussions and dialogue, exploring concepts in cognitive science and economics to practical elements of meditation, and more. It is a 5 day live-in program, hosted in Taipei, running twice: Jan 24 – Jan 28 & Feb 1 – Feb 5. The program is free to attend with meals and stay covered. Admissions begin November 15 and are run on a rolling basis. </p>
+        <p class="en"><span class="highlight">The Compass Fellowship</span> brings together curious and ambitious youths interested in reflecting, exploring, and changing themselves and the world with instructors with accomplished yet diverse life experiences. We seek to create an immersive experience emphasizing discussions and dialogue, exploring concepts in cognitive science and economics to practical elements of meditation, and more. It is a 5 day live-in program, hosted in Taipei, running twice: Jan 24 – Jan 28 & Feb 1 – Feb 5. The program is free to attend with meals and stay covered. Admissions begin November 15 and are run on a rolling basis. </p>
 
-<p>Compass Fellowship 聚集了一群好奇、有抱負/志向、願意反思、探索並改變自我與世界的青年學子，並由具有高度成就、背景多元的講師與導師共同帶領。我們致力於打造一個以深度討論與對話為核心的沉浸式體驗，內容涵蓋從認知科學、經濟學等概念，到實作型的冥想練習等多元主題。
+<p class="zh">Compass Fellowship 聚集了一群好奇、有抱負/志向、願意反思、探索並改變自我與世界的青年學子，並由具有高度成就、背景多元的講師與導師共同帶領。我們致力於打造一個以深度討論與對話為核心的沉浸式體驗，內容涵蓋從認知科學、經濟學等概念，到實作型的冥想練習等多元主題。
 這是一個為期五天、全程住宿的課程，地點位於台北，將舉辦兩梯次：1 月 24 日至 1 月 28 日、以及 2 月 1 日至 2 月 5 日。課程完全免費，並提供食宿。
 招生自 11 月 15 日 起開放，並採 滾動式錄取。</p>
 
         
         <h2>What We Will Explore</h2>
-        <p>Mornings introduce central frameworks and ideas that give us the tools for diving into discussions and workshops in the afternoon and evenings. Our classes take a wide range, pulling from ideas in economics, cognitive science, anthropology, philosophy, or computer science. This includes in-depth looks at applications of game theory or decision making theory. It can also look like revisiting “simple” concepts like statistics from unusual angles that give new perspectives. Armed with these ideas, afternoons and evenings are filled with workshops and facilitated discussions that puts them to use. Guest speakers from academic researchers to industry veterans may be invited in evenings for exploring applications of these ideas in the real world.</p>
+        <p class="en">Mornings introduce central frameworks and ideas that give us the tools for diving into discussions and workshops in the afternoon and evenings. Our classes take a wide range, pulling from ideas in economics, cognitive science, anthropology, philosophy, or computer science. This includes in-depth looks at applications of game theory or decision making theory. It can also look like revisiting “simple” concepts like statistics from unusual angles that give new perspectives. Armed with these ideas, afternoons and evenings are filled with workshops and facilitated discussions that puts them to use. Guest speakers from academic researchers to industry veterans may be invited in evenings for exploring applications of these ideas in the real world.</p>
         
         <h2>Our Methodology</h2>
-        <p>Lectures alone are rarely sufficient for the integration of profound ideas. In composing a cohort of inquisitive, thoughtful group, we host an dialogue-rich environment with small class sizes where we can dive into subjects of life that are often neglected within and beyond academics. By living together for 5 days, we give abundant space for immersive dialogue that can go to depths usually unavailable. Great degrees of agency is also given to participants to create or ask for the sessions they would find most engaging. The learning environment will be unlike most typical education programs, emphasizing our intrinsic interests as the compass for what we want to learn and pursue.</p>
+        <p class="en">Lectures alone are rarely sufficient for the integration of profound ideas. In composing a cohort of inquisitive, thoughtful group, we host an dialogue-rich environment with small class sizes where we can dive into subjects of life that are often neglected within and beyond academics. By living together for 5 days, we give abundant space for immersive dialogue that can go to depths usually unavailable. Great degrees of agency is also given to participants to create or ask for the sessions they would find most engaging. The learning environment will be unlike most typical education programs, emphasizing our intrinsic interests as the compass for what we want to learn and pursue.</p>
         
         <h2>Who This Is For</h2>
-        <p>Those currently in university or between 18-23 years old, primarily from Taiwan. The cohort will have a broad range of interests and pursuits to form an interdisciplinary environment. To this end we are looking for applicants to demonstrate an interest and/or capacity for open and curious inquiry, model that which is familiar and unfamiliar, and introspective awareness. There are no other hard requirements like GPA or being in a particular major. Comfort with mathematics is recommended, but not a prerequisite. Two cohorts of ~20 students each. The program is free to attend, with meal and stay covered.</p>
+        <p class="en">Those currently in university or between 18-23 years old, primarily from Taiwan. The cohort will have a broad range of interests and pursuits to form an interdisciplinary environment. To this end we are looking for applicants to demonstrate an interest and/or capacity for open and curious inquiry, model that which is familiar and unfamiliar, and introspective awareness. There are no other hard requirements like GPA or being in a particular major. Comfort with mathematics is recommended, but not a prerequisite. Two cohorts of ~20 students each. The program is free to attend, with meal and stay covered.</p>
         
         <p class="note">Note that the program will be run in English, but most staff are proficient in Chinese.</p>
 
@@ -598,31 +118,11 @@ window.addEventListener('scroll', updateBlurOnScroll);
 window.addEventListener('resize', updateBlurOnScroll);
 window.addEventListener('DOMContentLoaded', updateBlurOnScroll);
 </script>
-
-
-<!-- code to toggle hamburger menu -->
-<script>
-    const navToggle = document.getElementById("nav-toggle-button");
-const overlay = document.getElementById("mobile-menu-overlay");
-
-navToggle.addEventListener("click", () => {
-  const isActive = overlay.classList.toggle("active");
-  navToggle.textContent = isActive ? "×" : "☰";
-});
-
-overlay.addEventListener("click", (e) => {
-  if (e.target === overlay) {
-    // only if clicking background overlay closes menu
-    overlay.classList.remove("active");
-    navToggle.textContent = "☰";
-  }
-});
-</script>
-
-
 </body>
 
+<script src="/scripts/cursor.js"></script>
 <script src="/scripts/glslShader.js" defer></script>
+<script src="/scripts/hamburgermenu.js" defer></script>
 
 
 

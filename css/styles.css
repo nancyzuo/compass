@@ -303,6 +303,7 @@ nav {
   }
 }
 
+
 /* Star for mouse effect */
 .star {
   position: fixed;
@@ -405,10 +406,125 @@ nav {
   margin: 8px 0;
 }
 
+#nav-toggle-button,
+#mobile-menu-overlay {
+  display: none;
+}
+
+
+/* --- CSS for language visibility --- */
+.en { display: block; }
+.zh { display: none; }
+
+html.zh-mode .en,
+html.en-mode .zh { 
+  display: none; 
+}
+html.zh-mode .zh,
+html.en-mode .en { 
+  display: block; 
+}
+
+/* --- Optional: style disabled buttons --- */
+nav button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Basic nav styling */
+nav { margin-bottom: 20px; }
+nav button { margin-right: 10px; padding: 5px 10px; }
+
+
+/* Dev-only tag */
+.dev {
+  color: #EE9999;
+}
+
+.highlight {
+  color: #ffd84d; /* change to any color you like */
+  font-weight: bold; /* optional for emphasis */
+}
+
+
+.sponsor-heading {
+  font-size: 0.9rem;
+  color: white;
+  text-align: center;
+  margin-top: 40px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+
+.sponsors {
+  display: flex;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* align vertically if heights differ */
+  gap: 40px;               /* space between logos */
+  margin-top: 5px;        /* space above sponsors section */
+}
+
+/* Responsive logo sizes */
+.sponsor-logo {
+  max-height: 80px;        /* limit logo height */
+  width: auto;
+  display: block;
+  opacity: 50%;
+  transition: opacity 0.3s ease;
+}
+
+.sponsor-logo:hover {
+  opacity: 1; /* fully opaque on hover */
+  cursor: pointer;
+}
+
+
+
   #nav-toggle-button,
 #mobile-menu-overlay {
   display: none;
 }
+
+.sponsor-heading {
+  font-size: 0.9rem;
+  color: white;
+  text-align: center;
+  margin-top: 40px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+
+.sponsors {
+  display: flex;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* align vertically if heights differ */
+  gap: 40px;               /* space between logos */
+  margin-top: 5px;        /* space above sponsors section */
+}
+
+/* Responsive logo sizes */
+.sponsor-logo {
+  max-height: 80px;        /* limit logo height */
+  width: auto;
+  display: block;
+  opacity: 50%;
+  transition: opacity 0.3s ease;
+}
+
+.sponsor-logo:hover {
+  opacity: 1; /* fully opaque on hover */
+  cursor: pointer;
+}
+.highlight {
+    color: #ffd84d; /* change to any color you like /
+    font-weight: bold; / optional for emphasis */
+  }
 
 
 
