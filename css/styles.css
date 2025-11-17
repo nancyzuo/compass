@@ -25,6 +25,25 @@
   transform: translate(-50%, -50%);
 }
 
+/* translation is hidden by default */
+.en, .zh {
+  display: none;
+}
+
+.en-mode .en {
+  display: inline-block; /* or block depending on your layout */
+}
+
+.zh-mode .zh {
+  display: inline-block;
+}
+
+/* Optional: style active button */
+button.active {
+  font-weight: bold;
+  /* add button highlight styles as needed */
+}
+
 /* Body and html */
 html, body {
   height: 100%;
@@ -79,6 +98,43 @@ p {
   font-style: italic;
   margin-top: 10px;
 }
+
+
+.sponsor-heading {
+  font-size: 0.9rem;
+  color: white;
+  text-align: center;
+  margin-top: 40px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+
+.sponsors {
+  display: flex;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* align vertically if heights differ */
+  gap: 40px;               /* space between logos */
+  margin-top: 5px;        /* space above sponsors section */
+}
+
+/* Responsive logo sizes */
+.sponsor-logo {
+  max-height: 80px;        /* limit logo height */
+  width: auto;
+  display: block;
+  opacity: 50%;
+  transition: opacity 0.3s ease;
+}
+
+.sponsor-logo:hover {
+  opacity: 1; /* fully opaque on hover */
+  cursor: pointer;
+}
+
+
 
 /* Background shader container */
 #background {
@@ -252,7 +308,8 @@ nav {
   display: block;
   margin: 0 auto;
   /* max-width: 75%; */
-  max-width: 50%;
+  max-width: 100%;
+
   height: auto;
   margin-bottom: 3%;
   /* margin-right: 10%; */
@@ -303,7 +360,6 @@ nav {
   }
 }
 
-
 /* Star for mouse effect */
 .star {
   position: fixed;
@@ -323,7 +379,6 @@ nav {
 .blurry {
   transition: filter 0.3s, opacity 0.3s;
 }
-
 
 
 /* faq */
@@ -384,6 +439,11 @@ nav {
 
 
 
+/* team page */
+.team-heading {
+    display: none;
+  }
+
 
 
 
@@ -406,125 +466,10 @@ nav {
   margin: 8px 0;
 }
 
-#nav-toggle-button,
-#mobile-menu-overlay {
-  display: none;
-}
-
-
-/* --- CSS for language visibility --- */
-.en { display: block; }
-.zh { display: none; }
-
-html.zh-mode .en,
-html.en-mode .zh { 
-  display: none; 
-}
-html.zh-mode .zh,
-html.en-mode .en { 
-  display: block; 
-}
-
-/* --- Optional: style disabled buttons --- */
-nav button:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-/* Basic nav styling */
-nav { margin-bottom: 20px; }
-nav button { margin-right: 10px; padding: 5px 10px; }
-
-
-/* Dev-only tag */
-.dev {
-  color: #EE9999;
-}
-
-.highlight {
-  color: #ffd84d; /* change to any color you like */
-  font-weight: bold; /* optional for emphasis */
-}
-
-
-.sponsor-heading {
-  font-size: 0.9rem;
-  color: white;
-  text-align: center;
-  margin-top: 40px;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-
-.sponsors {
-  display: flex;
-  justify-content: center; /* center horizontally */
-  align-items: center;     /* align vertically if heights differ */
-  gap: 40px;               /* space between logos */
-  margin-top: 5px;        /* space above sponsors section */
-}
-
-/* Responsive logo sizes */
-.sponsor-logo {
-  max-height: 80px;        /* limit logo height */
-  width: auto;
-  display: block;
-  opacity: 50%;
-  transition: opacity 0.3s ease;
-}
-
-.sponsor-logo:hover {
-  opacity: 1; /* fully opaque on hover */
-  cursor: pointer;
-}
-
-
-
   #nav-toggle-button,
 #mobile-menu-overlay {
   display: none;
 }
-
-.sponsor-heading {
-  font-size: 0.9rem;
-  color: white;
-  text-align: center;
-  margin-top: 40px;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-
-.sponsors {
-  display: flex;
-  justify-content: center; /* center horizontally */
-  align-items: center;     /* align vertically if heights differ */
-  gap: 40px;               /* space between logos */
-  margin-top: 5px;        /* space above sponsors section */
-}
-
-/* Responsive logo sizes */
-.sponsor-logo {
-  max-height: 80px;        /* limit logo height */
-  width: auto;
-  display: block;
-  opacity: 50%;
-  transition: opacity 0.3s ease;
-}
-
-.sponsor-logo:hover {
-  opacity: 1; /* fully opaque on hover */
-  cursor: pointer;
-}
-.highlight {
-    color: #ffd84d; /* change to any color you like /
-    font-weight: bold; / optional for emphasis */
-  }
 
 
 
@@ -559,6 +504,16 @@ nav button { margin-right: 10px; padding: 5px 10px; }
     font-size: 0.9rem;
   }
 
+  .team-heading {
+    display: block;
+  }
+
+  .team-container {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+
    #nav-toggle-button,
   #mobile-menu-overlay {
     display: block;
@@ -569,7 +524,7 @@ nav button { margin-right: 10px; padding: 5px 10px; }
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.8); /* near-black full background */
+  background: rgba(0, 0, 0, 0.9); /* near-black full background */
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s ease;
@@ -578,7 +533,7 @@ nav button { margin-right: 10px; padding: 5px 10px; }
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 40px;
+  gap: 15px;
   font-size: 2rem;
   color: white;
   text-align: center;
@@ -607,12 +562,9 @@ nav button { margin-right: 10px; padding: 5px 10px; }
   font-size: 1.5rem;
   padding: 15px 40px;
   margin-top: 40px;
+  border-radius: 50px;
 }
 
-.menu-link.apply-btn:hover {
-  background-color: #ffe14d;
-  color: black;
-}
 
 
 
@@ -661,6 +613,21 @@ nav button { margin-right: 10px; padding: 5px 10px; }
   color: white;
   cursor: pointer;
 }
+
+
+/* faq */
+
+.faq-question {
+    font-size: 14px;
+  }
+
+  .faq-answer p {
+    font-size: 12px;
+  }
+
+  .faq-answer li {
+    font-size: 12px;
+  }
 
 
 
