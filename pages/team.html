@@ -7,8 +7,12 @@
   <title>Compass Fellowship '26 - Team</title>
 
   <link rel="stylesheet" href="/css/styles.css" />
-  <script src="/scripts/fireflies.js" defer></script>
-  <script src="/scripts/language_toggle.js" defer></script> 
+  <script type="module" src="/scripts/common.js" defer></script>
+  <script type="module" src="/scripts/fireflies.js" defer></script> 
+  <script type="module" src="/scripts/language_toggle.js" defer></script> 
+  <script type="module" src="/scripts/cursor.js" defer></script>
+  <script type="module" src="/scripts/glslShader.js" defer></script>
+  <script type="module" src="/scripts/hamburgermenu.js" defer></script>
   <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
 
   <style>
@@ -135,7 +139,6 @@
   </div>
 
   <div id="navbar-placeholder"></div>
-
   <script>
     fetch('components/navbar.html')
       .then(response => response.text())
@@ -143,18 +146,15 @@
         document.getElementById('navbar-placeholder').innerHTML = data;
       });
   </script>
-   
-   <!-- FOR MOBILE NAV BAR -->
-    <button id="nav-toggle-button" aria-label="Toggle navigation menu">☰</button>
-    <div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Main menu">
-    <a href="index.html" class="menu-link">HOME</a>    
-    <a href="info.html" class="menu-link">INFO</a>
-    <a href="team.html" class="menu-link">TEAM</a>
-    <a href="faq.html" class="menu-link">FAQ</a>
-    <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" class="menu-link apply-btn" target="_blank" rel="noopener">APPLY</a>
-    </div>
 
-  <h1 class="team-heading">team</h1>
+  <div id="mobile-navbar-placeholder"></div>
+  <script>
+    fetch('components/mobile_navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('mobile-navbar-placeholder').innerHTML = data;
+      });
+  </script>
 
   <!-- Team grid -->
   <div class="team-container" id="team-container">
@@ -220,10 +220,6 @@
       <p id="modal-bio"></p>
     </div>
   </div>
-
-  <script src="/scripts/glslShader.js" defer></script>
-  <script src="/scripts/cursor.js"></script>
-  <script src="/scripts/hamburgermenu.js"></script>
 
   <script>
     const modal = document.getElementById('modal');

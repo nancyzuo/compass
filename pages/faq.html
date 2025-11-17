@@ -4,9 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/images/compasslogo.png">
-<link rel="stylesheet" href="/css/styles.css" />
-<script src="/scripts/fireflies.js" defer></script> 
-<script src="/scripts/language_toggle.js" defer></script> 
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script type="module" src="/scripts/common.js" defer></script>
+  <script type="module" src="/scripts/fireflies.js" defer></script> 
+  <script type="module" src="/scripts/language_toggle.js" defer></script> 
+  <script type="module" src="/scripts/cursor.js" defer></script>
+  <script type="module" src="/scripts/glslShader.js" defer></script>
+  <script type="module" src="/scripts/hamburgermenu.js" defer></script>
   <title>compass fellowship '26</title>
     <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
 </head>
@@ -21,8 +25,7 @@
   </div>
 
   
- <div id="navbar-placeholder"></div>
-
+<div id="navbar-placeholder"></div>
 <script>
   fetch('components/navbar.html')
     .then(response => response.text())
@@ -31,15 +34,15 @@
     });
 </script>
 
- <!-- FOR MOBILE NAV BAR -->
-<button id="nav-toggle-button" aria-label="Toggle navigation menu">☰</button>
-<div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Main menu">
-<a href="index.html" class="menu-link">HOME</a>    
-  <a href="info.html" class="menu-link">INFO</a>
-  <a href="team.html" class="menu-link">TEAM</a>
-  <a href="faq.html" class="menu-link">FAQ</a>
-  <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" class="menu-link apply-btn" target="_blank" rel="noopener">APPLY</a>
-</div>
+<div id="mobile-navbar-placeholder"></div>
+<script>
+  fetch('components/mobile_navbar.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('mobile-navbar-placeholder').innerHTML = data;
+    });
+</script>
+
 
 <div class="faq-container">
   <!-- todo: remove -->
@@ -164,9 +167,5 @@
 
 
 </body>
-
-<script src="/scripts/cursor.js"></script>
-<script src="/scripts/glslShader.js" defer></script>
-<script src="/scripts/hamburgermenu.js" defer></script>
 
 </html>
