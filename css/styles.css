@@ -484,11 +484,6 @@ nav {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.menu-link:hover {
-  background-color: #ffd84d;
-  color: black;
-  cursor: pointer;
-}
 
 .menu-link.apply-btn {
   background-color: white;

@@ -28,6 +28,7 @@
         margin: 0;
         display: flex;
         justify-content: center; /* horizontal center */
+        font-family: 'Inconsolata', monospace;
         color: white;
     }
 
@@ -42,7 +43,6 @@
     }
 
     body {
-      font-family: 'Inconsolata';
       overflow-x: hidden;
       color: white;
       text-align: center;
@@ -188,10 +188,6 @@ p {
     }
 
 
-
-
-    
-
     /* Center star + title */
     .center-container {
         
@@ -289,12 +285,19 @@ p {
         transition: filter 0.3s, opacity 0.3s;
     }
 
+     .highlight {
+    color: #ffd84d; /* change to any color you like */
+    font-weight: bold; /* optional for emphasis */
+  }
+
 
 
   #nav-toggle-button,
 #mobile-menu-overlay {
   display: none;
 }
+
+
 
 
 
@@ -439,8 +442,9 @@ p {
   font-size: 2rem;
   color: white;
   cursor: pointer;
-}
+    
 
+} 
 
         
   </style>
@@ -472,6 +476,7 @@ p {
      <!-- FOR MOBILE NAV BAR -->
     <button id="nav-toggle-button" aria-label="Toggle navigation menu">☰</button>
     <div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Main menu">
+    <a href="index.html" class="menu-link">HOME</a>    
     <a href="info.html" class="menu-link">INFO</a>
     <a href="team.html" class="menu-link">TEAM</a>
     <a href="faq.html" class="menu-link">FAQ</a>
@@ -479,7 +484,7 @@ p {
     </div>
         
     <div class="content-container">
-        <p>The Compass Fellowship brings together curious and ambitious youths interested in reflecting, exploring, and changing themselves and the world with instructors with accomplished yet diverse life experiences. We seek to create an immersive experience emphasizing discussions and dialogue, exploring concepts in cognitive science and economics to practical elements of meditation, and more. It is a 5 day live-in program, hosted in Taipei, running twice: Jan 24 – Jan 28 & Feb 1 – Feb 5. The program is free to attend with meals and stay covered. Admissions begin November 15 and are run on a rolling basis. </p>
+        <p><span class="highlight">The Compass Fellowship</span> brings together curious and ambitious youths interested in reflecting, exploring, and changing themselves and the world with instructors with accomplished yet diverse life experiences. We seek to create an immersive experience emphasizing discussions and dialogue, exploring concepts in cognitive science and economics to practical elements of meditation, and more. It is a 5 day live-in program, hosted in Taipei, running twice: Jan 24 – Jan 28 & Feb 1 – Feb 5. The program is free to attend with meals and stay covered. Admissions begin November 15 and are run on a rolling basis. </p>
 
 <p>Compass Fellowship 聚集了一群好奇、有抱負/志向、願意反思、探索並改變自我與世界的青年學子，並由具有高度成就、背景多元的講師與導師共同帶領。我們致力於打造一個以深度討論與對話為核心的沉浸式體驗，內容涵蓋從認知科學、經濟學等概念，到實作型的冥想練習等多元主題。
 這是一個為期五天、全程住宿的課程，地點位於台北，將舉辦兩梯次：1 月 24 日至 1 月 28 日、以及 2 月 1 日至 2 月 5 日。課程完全免費，並提供食宿。
@@ -541,6 +546,8 @@ window.addEventListener('resize', updateBlurOnScroll);
 window.addEventListener('DOMContentLoaded', updateBlurOnScroll);
 </script>
 
+
+<!-- code to toggle hamburger menu -->
 <script>
     const navToggle = document.getElementById("nav-toggle-button");
 const overlay = document.getElementById("mobile-menu-overlay");
