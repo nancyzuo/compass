@@ -297,6 +297,42 @@ p {
   display: none;
 }
 
+.sponsor-heading {
+  font-size: 0.9rem;
+  color: white;
+  text-align: center;
+  margin-top: 40px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+
+.sponsors {
+  display: flex;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* align vertically if heights differ */
+  gap: 40px;               /* space between logos */
+  margin-top: 5px;        /* space above sponsors section */
+}
+
+/* Responsive logo sizes */
+.sponsor-logo {
+  max-height: 80px;        /* limit logo height */
+  width: auto;
+  display: block;
+  opacity: 50%;
+  transition: opacity 0.3s ease;
+}
+
+.sponsor-logo:hover {
+  opacity: 1; /* fully opaque on hover */
+  cursor: pointer;
+}
+
+
+
 
 
 
@@ -501,7 +537,24 @@ p {
         <p>Those currently in university or between 18-23 years old, primarily from Taiwan. The cohort will have a broad range of interests and pursuits to form an interdisciplinary environment. To this end we are looking for applicants to demonstrate an interest and/or capacity for open and curious inquiry, model that which is familiar and unfamiliar, and introspective awareness. There are no other hard requirements like GPA or being in a particular major. Comfort with mathematics is recommended, but not a prerequisite. Two cohorts of ~20 students each. The program is free to attend, with meal and stay covered.</p>
         
         <p class="note">Note that the program will be run in English, but most staff are proficient in Chinese.</p>
+
+        <h2 class="sponsor-heading">sponsored by</h2>
+        <div class="sponsors">
+<a href="https://www.sparc.camp" target="_blank">
+    <img src="/images/sponsors/sparclogo-white.png" alt="Sparc logo" class="sponsor-logo" />
+  </a>
+  <a href="https://emergent.vc" target="_blank">
+    <img src="/images/sponsors/emergentventureslogo-white.png" alt="Emergent Ventures logo" class="sponsor-logo" />
+  </a>
+</div>
+        
+
+      
+
         <div style="height: 350px;"></div> 
+
+
+        
     </div>
 
 
