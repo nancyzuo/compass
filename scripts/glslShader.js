@@ -5,7 +5,7 @@ async function loadShaderSource(url) {
   return response.text();
 }
 
-async function initShader(canvasId = "skyCanvas", shaderUrl = "shader.frag") {
+async function initShader(canvasId = "skyCanvas", shaderUrl = "../scripts/shader.frag") {
   const canvas = document.getElementById(canvasId);
   if (!canvas) {
     console.error(`Canvas with id '${canvasId}' not found.`);

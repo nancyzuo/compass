@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/images/compasslogo.png">
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="/scripts/fireflies.js" defer></script>
+  <title>compass fellowship '26</title>
+    <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
+</head>
+
+<body>
+
+
+<!-- adding music, maybe change it to whern click on the star, it'll spin and play the music -->
+<!-- 
+<script>
+  document.body.addEventListener('click', () => {
+    const audio = document.getElementById('bg-music');
+    audio.muted = false;
+    audio.play();
+  }, { once: true });
+</script>
+ <audio id="bg-music" autoplay loop muted>
+    <source src="audio/moonriver.mp3" type="audio/mp3" />
+    </audio> -->
+
+  <!-- SHADER BACKGROUND (replace with your WebGL canvas) -->
+  <div id="background">
+    <canvas id="skyCanvas"></canvas>
+  </div>
+  
+  <!-- NAV BAR -->
+ <div id="navbar-placeholder"></div>
+
+   <!-- FOR MOBILE NAV BAR -->
+  <button id="nav-toggle-button" aria-label="Toggle navigation menu">☰</button>
+  <div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Main menu">
+    <a href="info.html" class="menu-link">INFO</a>
+    <a href="team.html" class="menu-link">TEAM</a>
+    <a href="faq.html" class="menu-link">FAQ</a>
+    <a href="https://docs.google.com/forms/d/..." class="menu-link apply-btn" target="_blank" rel="noopener">APPLY</a>
+  </div>
+
+<script>
+  fetch('components/navbar.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('navbar-placeholder').innerHTML = data;
+    });
+</script>
+
+<!-- vignette black background for nav bar -->
+<div id="top-vignette"></div>
+
+  <!-- HOME PAGE TEXT -->
+  <div class="center-container">
+    <div class="center-container">
+    <img src="/images/bear.png" alt="COMPASS FELLOWSHIP logo title" class="title-image" />
+    <div class="subtitle">January 24 - 28 & February 1 - 5</div>
+    <div class="location">Wenshan District, Taipei</div>
+    <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" target="_blank" class="apply-btn">APPLY</a>
+    <div class="apply-deadline"><i>by jan 10 2026</i></div>
+  </div>
+  </div>
+
+  <!-- PEOPLE AND TAIPEI 101 -->
+  <!--img id="overlay" src="/images/taipei101.png" alt="people sitting on hills" /-->
+  
+  <picture>
+  <source media="(max-width: 480px)" srcset="/images/taipei101crop.png" />
+  <source media="(min-width: 481px)" srcset="/images/taipei101.png" />
+  <img id="overlay" src="/images/taipei101.png" alt="Description" />
+  </picture>
+
+
+  <!-- CUSTOM CURSOR SCRIPT -->
+  <script src="/scripts/cursor.js"></script>
+  <!-- BACKGROUND SCRIPT -->
+  <script src="/scripts/glslShader.js" defer></script>
+  <!-- MOBILE MENU -->
+  <script src="/scripts/hamburgermenu.js"></script>
+
+</body>
+
+
+</html>
