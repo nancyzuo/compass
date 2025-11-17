@@ -8,16 +8,9 @@
   <script src="components/fireflies.js" defer></script>
   <title>compass fellowship '26</title>
     <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
-
-
 </head>
 
 <body>
-
-<script>
- 
-</script>
-
 
 <!-- adding music, maybe change it to whern click on the star, it'll spin and play the music -->
 <!-- 
@@ -40,6 +33,15 @@
   <!-- NAV BAR -->
  <div id="navbar-placeholder"></div>
 
+ <!-- FOR MOBILE NAV BAR -->
+<button id="nav-toggle-button" aria-label="Toggle navigation menu">☰</button>
+<div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Main menu">
+  <a href="info.html" class="menu-link">INFO</a>
+  <a href="team.html" class="menu-link">TEAM</a>
+  <a href="faq.html" class="menu-link">FAQ</a>
+  <a href="https://docs.google.com/forms/d/..." class="menu-link apply-btn" target="_blank" rel="noopener">APPLY</a>
+</div>
+
 <script>
   fetch('components/navbar.html')
     .then(response => response.text())
@@ -54,7 +56,7 @@
   <!-- HOME PAGE TEXT -->
   <div class="center-container">
     <div class="center-container">
-    <img src="images/logoname2.png" alt="COMPASS FELLOWSHIP logo title" class="title-image" />
+    <img src="images/bear.png" alt="COMPASS FELLOWSHIP logo title" class="title-image" />
     <div class="subtitle">January 24 - 28 & February 1 - 5</div>
     <div class="location">Wenshan District, Taipei</div>
     <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" target="_blank" class="apply-btn">APPLY</a>
@@ -63,13 +65,22 @@
   </div>
 
   <!-- PEOPLE AND TAIPEI 101 -->
-  <img id="overlay" src="images/taipei101.png" alt="people sitting on hills" />
+  <!-- <img id="overlay" src="images/taipei101.png" alt="people sitting on hills" /> -->
 
+
+<picture>
+  <source media="(max-width: 480px)" srcset="images/taipei101crop.png" />
+  <source media="(min-width: 481px)" srcset="images/taipei101.png" />
+  <img id="overlay" src="images/taipei101.png" alt="Description" />
+</picture>
 
   <!-- CUSTOM CURSOR SCRIPT -->
   <script src="components/cursor.js"></script>
   <!-- BACKGROUND SCRIPT -->
   <script src="components/glslShader.js" defer></script>
+  <!-- MOBILE MENU -->
+<script src="components/hamburgermenu.js"></script>
+
 
 </body>
 

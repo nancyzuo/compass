@@ -289,6 +289,159 @@ p {
         transition: filter 0.3s, opacity 0.3s;
     }
 
+
+
+  #nav-toggle-button,
+#mobile-menu-overlay {
+  display: none;
+}
+
+
+
+/* MEDIA SIZE FOR RESPONSIVE LAYOUT */
+/* Responsive tweaks below 768px width */
+@media (max-width: 768px) {
+  .center-container {
+    padding: 10px;
+    max-width: 95%;
+  }
+  
+  .title-image {
+    max-width: 90vw; /* almost full width on small screens */
+  }
+  
+  .subtitle, .location, .apply-deadline {
+    font-size: 1rem;
+  }
+  
+  .apply-btn {
+    padding: 10px 18px;
+    font-size: 1rem;
+  }
+
+
+
+}
+
+/* Extra small devices (phones, 480px and down) */
+@media (max-width: 480px) {
+
+    nav {
+        display: none;
+    }
+  .subtitle, .location, .apply-deadline {
+    font-size: 0.9rem;
+  }
+
+   #nav-toggle-button,
+  #mobile-menu-overlay {
+    display: block;
+  }
+
+ #mobile-menu-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8); /* near-black full background */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 11000; /* above all content except toggle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+  font-size: 2rem;
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+
+/* Show overlay and menu */
+#mobile-menu-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 15px 30px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-link:hover {
+  background-color: #ffd84d;
+  color: black;
+  cursor: pointer;
+}
+
+.menu-link.apply-btn {
+  background-color: white;
+  color: black;
+  font-size: 1.5rem;
+  padding: 15px 40px;
+  margin-top: 40px;
+}
+
+.menu-link.apply-btn:hover {
+  background-color: #ffe14d;
+  color: black;
+}
+
+
+
+/* Nav container stacking vertically for mobile */
+#navbar-placeholder {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: #0b0220; /* Match page background or use translucent */
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 40px 20px 20px 20px;
+  box-shadow: -2px 0 15px rgba(0,0,0,0.7);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 10999; /* above overlay */
+}
+
+/* Show menu sliding from right */
+#navbar-placeholder.active {
+  transform: translateX(0);
+}
+
+/* Style nav links */
+#navbar-placeholder a {
+  color: white;
+  font-weight: 600;
+  padding: 8px 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Hamburger or "+" toggle button */
+#nav-toggle-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 11001; /* above star and overlay */
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+
+
         
   </style>
 
@@ -315,7 +468,16 @@ p {
             <a href="https://docs.google.com/forms/d/1gOhcHAmKVjMeXKGFmiek0noKtls0skEILfKl7Lp7QVo/viewform?edit_requested=true" target="_blank" class="apply-btn">APPLY</a>
         </ul>
     </nav>
-    
+
+     <!-- FOR MOBILE NAV BAR -->
+    <button id="nav-toggle-button" aria-label="Toggle navigation menu">☰</button>
+    <div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Main menu">
+    <a href="info.html" class="menu-link">INFO</a>
+    <a href="team.html" class="menu-link">TEAM</a>
+    <a href="faq.html" class="menu-link">FAQ</a>
+    <a href="https://docs.google.com/forms/d/..." class="menu-link apply-btn" target="_blank" rel="noopener">APPLY</a>
+    </div>
+        
     <div class="content-container">
         <p>The Compass Fellowship brings together curious and ambitious youths interested in reflecting, exploring, and changing themselves and the world with instructors with accomplished yet diverse life experiences. We seek to create an immersive experience emphasizing discussions and dialogue, exploring concepts in cognitive science and economics to practical elements of meditation, and more. It is a 5 day live-in program, hosted in Taipei, running twice: Jan 24 – Jan 28 & Feb 1 – Feb 5. The program is free to attend with meals and stay covered. Admissions begin November 15 and are run on a rolling basis. </p>
 
@@ -338,8 +500,13 @@ p {
     </div>
 
 
-  <!-- FIXED FOREGROUND SILHOUETTE OVERLAY -->
-  <img id="overlay" src="images/taipei101.png" alt="people sitting on hills" />
+<!-- overlay image of people sitting on hills -->
+<picture>
+  <source media="(max-width: 480px)" srcset="images/taipei101crop.png" />
+  <source media="(min-width: 481px)" srcset="images/taipei101.png" />
+  <img id="overlay" src="images/taipei101.png" alt="Description" />
+</picture>
+
 
 <script>
 function updateBlurOnScroll() {
@@ -375,11 +542,30 @@ window.addEventListener('resize', updateBlurOnScroll);
 window.addEventListener('DOMContentLoaded', updateBlurOnScroll);
 </script>
 
+<script>
+    const navToggle = document.getElementById("nav-toggle-button");
+const overlay = document.getElementById("mobile-menu-overlay");
+
+navToggle.addEventListener("click", () => {
+  const isActive = overlay.classList.toggle("active");
+  navToggle.textContent = isActive ? "×" : "☰";
+});
+
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay) {
+    // only if clicking background overlay closes menu
+    overlay.classList.remove("active");
+    navToggle.textContent = "☰";
+  }
+});
+</script>
 
 
 </body>
 
+
   <script src="components/glslShader.js" defer></script>
+
 
 
 </html>

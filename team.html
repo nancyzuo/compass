@@ -194,8 +194,17 @@
         document.getElementById('navbar-placeholder').innerHTML = data;
       });
   </script>
+   
+   <!-- FOR MOBILE NAV BAR -->
+    <button id="nav-toggle-button" aria-label="Toggle navigation menu">☰</button>
+    <div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Main menu">
+    <a href="info.html" class="menu-link">INFO</a>
+    <a href="team.html" class="menu-link">TEAM</a>
+    <a href="faq.html" class="menu-link">FAQ</a>
+    <a href="https://docs.google.com/forms/d/..." class="menu-link apply-btn" target="_blank" rel="noopener">APPLY</a>
+    </div>
 
-  <img id="overlay" src="images/taipei101.png" alt="people sitting on hills" />
+
 
   <!-- Team grid -->
   <div class="team-container" id="team-container">
@@ -264,6 +273,7 @@
 
   <script src="components/glslShader.js" defer></script>
   <script src="components/cursor.js"></script>
+<script src="components/hamburgermenu.js"></script>
 
   <script>
     const modal = document.getElementById('modal');
@@ -304,5 +314,6 @@
       if (e.key === 'Escape') hideModal();
     });
   </script>
+
 </body>
 </html>
