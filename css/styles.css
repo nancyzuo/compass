@@ -48,7 +48,7 @@ button.active {
 html, body {
   height: 100%;
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
   font-family: 'Inconsolata', monospace;
   color: white;
   text-align: center; /* center content container horizontally */
@@ -625,10 +625,13 @@ nav {
     font-size: 12px;
   }
 
+<<<<<<< Updated upstream
   .faq-answer li {
     font-size: 12px;
   }
 
+=======
+>>>>>>> Stashed changes
 
 
 }
