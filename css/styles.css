@@ -125,14 +125,18 @@ p {
   margin-top: 5px;        /* space above sponsors section */
 }
 
-/* Responsive logo sizes */
-.sponsor-logo {
-  max-height: 80px;        /* limit logo height */
-  width: auto;
-  display: block;
+.sponsor-logo-left {
+  max-height: 60px; /* smaller size for left logo */
   opacity: 50%;
   transition: opacity 0.3s ease;
 }
+
+.sponsor-logo-right {
+  max-height: 150px; /* larger size for right logo */
+  opacity: 50%;
+  transition: opacity 0.3s ease;
+}
+
 
 .sponsor-logo:hover {
   opacity: 1; /* fully opaque on hover */
