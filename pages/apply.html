@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="/images/compasslogo.png" />
+  <title>Compass Fellowship | Application</title>
+
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script type="module" src="/scripts/common.js" defer></script>
+  <script type="module" src="/scripts/fireflies.js" defer></script> 
+  <script type="module" src="/scripts/language_toggle.js" defer></script> 
+  <script type="module" src="/scripts/cursor.js" defer></script>
+  <script type="module" src="/scripts/glslShader.js" defer></script>
+  <script type="module" src="/scripts/hamburgermenu.js" defer></script>
+  <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
+
+</head>
+<body>
+
+  <div id="top-vignette"></div>
+
+  <div id="background">
+    <canvas id="skyCanvas"></canvas>
+  </div>
+
+  <div class="content-container">
+    <h2>Compass Fellowship application is now open!</h2>
+    <p>Applications are reviewed on a rolling basis, which means we will accept participants up until spots are filled up. It’s generally recommended you apply sooner rather than later, especially if you have a preference for joining one of the runs due to availability.</p>
+
+    <p>We will be accepting applications until January 10, 2026.</p>
+
+    <p>If you have any questions, feel free to email contact+compass [at] compassfellowship.app </p>
+
+  </div>
+
+  <div id="navbar-placeholder"></div>
+  <script>
+    fetch('components/navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-placeholder').innerHTML = data;
+      });
+  </script>
+
+  <div id="mobile-navbar-placeholder"></div>
+  <script>
+    fetch('components/mobile_navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('mobile-navbar-placeholder').innerHTML = data;
+      });
+  </script>
+
+ 
+
+</body>
+</html>

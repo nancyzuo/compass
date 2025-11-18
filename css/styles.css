@@ -92,6 +92,10 @@ p {
   color: #c4c4c4;
 }
 
+/* .highlight {
+  color: rgb(231, 198, 12);
+} */
+
 .note {
   font-size: 0.9rem;
   color: #777;
@@ -329,7 +333,7 @@ nav {
 
 /* Apply deadline text */
 .apply-deadline {
-  font-size: 0.75rem;
+  font-size: 0.4rem;
   color: white;
   margin-top: 10px;
   font-weight: 500;
@@ -625,13 +629,10 @@ nav {
     font-size: 12px;
   }
 
-<<<<<<< Updated upstream
   .faq-answer li {
     font-size: 12px;
   }
 
-=======
->>>>>>> Stashed changes
 
 
 }
