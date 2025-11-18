@@ -295,12 +295,15 @@ nav {
   flex-direction: column; /* stack children vertically */
   justify-content: center; /* center vertically */
   align-items: center; /* center horizontally */
-  height: 100vh; /* full viewport height */
   max-width: 600px;
   margin: 0 auto; /* horizontally center container */
   padding: 20px;
   box-sizing: border-box;
   text-align: center; /* center text */
+}
+
+.full-viewport {
+  height: 100vh; /* full viewport height */
 }
 
 /* Title image */
