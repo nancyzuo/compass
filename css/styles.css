@@ -97,10 +97,6 @@ p {
   color: #c4c4c4;
 }
 
-/* .highlight {
-  color: rgb(231, 198, 12);
-} */
-
 .note {
   font-size: 0.9rem;
   color: #777;
@@ -231,7 +227,7 @@ nav {
   padding: 0;
 }
 
-.nav-links a {
+.nav-links a.nav-link {
   color: rgba(255,255,255,0.55);
   text-decoration: none;
   transition: color 0.2s ease, text-shadow 0.3s ease;
@@ -304,12 +300,15 @@ nav {
   flex-direction: column; /* stack children vertically */
   justify-content: center; /* center vertically */
   align-items: center; /* center horizontally */
-  height: 100vh; /* full viewport height */
   max-width: 600px;
   margin: 0 auto; /* horizontally center container */
   padding: 20px;
   box-sizing: border-box;
   text-align: center; /* center text */
+}
+
+.full-viewport {
+  height: 100vh; /* full viewport height */
 }
 
 /* Title image */
@@ -338,7 +337,7 @@ nav {
 
 /* Apply deadline text */
 .apply-deadline {
-  font-size: 0.4rem;
+  font-size: 0.75rem;
   color: white;
   margin-top: 10px;
   font-weight: 500;
@@ -662,7 +661,6 @@ nav {
   .faq-answer li {
     font-size: 12px;
   }
-
 
 
 }
