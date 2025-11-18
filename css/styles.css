@@ -534,7 +534,6 @@ nav {
   transition: opacity 0.5s ease;
   z-index: 11000; /* above all content except toggle */
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 15px;
@@ -542,6 +541,9 @@ nav {
   color: white;
   text-align: center;
   padding: 40px;
+
+  overflow-y: auto;
+  justify-content: flex-start;
 }
 
 /* Show overlay and menu */
