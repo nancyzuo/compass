@@ -12,6 +12,11 @@
   box-sizing: border-box;
 }
 
+/* hide scrollbar */
+body::-webkit-scrollbar {
+  display: none;
+}
+
 /* cursor */
 .star {
   position: fixed;
@@ -341,6 +346,24 @@ nav {
   opacity: 0.3;
 }
 
+/* mobile logo */
+.mobile-logo {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 11000;
+  user-select: none;
+}
+
+.mobile-logo img {
+  height: 30px; /* adjust as needed */
+  width: auto;
+  display: block;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
 /* Fireflies */
 .firefly {
   position: absolute;
@@ -500,12 +523,17 @@ nav {
 
 
 
+
 }
 
 /* Extra small devices (phones, 480px and down) */
 @media (max-width: 480px) {
   .subtitle, .location, .apply-deadline {
     font-size: 0.9rem;
+  }
+
+  .mobile-logo {
+    display: block;
   }
 
   .team-heading {
