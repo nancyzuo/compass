@@ -221,7 +221,7 @@ nav {
   display: flex;
   justify-content: space-between;
   flex-grow: 1;
-  margin-left: 40px;
+  /* margin-left: 40px; */
   list-style: none;
   padding: 0;
 }
