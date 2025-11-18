@@ -37,24 +37,14 @@
   </div>
   
   <!-- NAV BAR -->
- <div id="navbar-placeholder"></div>
-
-   <!-- FOR MOBILE NAV BAR -->
-  <button id="nav-toggle-button" aria-label="Toggle navigation menu">☰</button>
-  <div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Main menu">
-    <a href="info.html" class="menu-link">INFO</a>
-    <a href="team.html" class="menu-link">TEAM</a>
-    <a href="faq.html" class="menu-link">FAQ</a>
-    <a href="pages/apply.html" class="menu-link apply-btn" target="_blank" rel="noopener">APPLY</a>
-  </div>
-
-<script>
-  fetch('components/navbar.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('navbar-placeholder').innerHTML = data;
-    });
-</script>
+<div id="navbar-placeholder"></div>
+  <script>
+    fetch('components/navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-placeholder').innerHTML = data;
+      });
+  </script>
 
   <div id="mobile-navbar-placeholder"></div>
   <script>
