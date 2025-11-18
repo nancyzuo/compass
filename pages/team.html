@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/png" href="/images/compasslogo.png" />
-  <title>Compass Fellowship '26 - Team</title>
+  <title>Compass Fellowship | Team</title>
 
   <link rel="stylesheet" href="/css/styles.css" />
   <script type="module" src="/scripts/common.js" defer></script>
@@ -19,14 +19,15 @@
 
     /* Team container grid */
     .team-container {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0px;
-      max-width: 1000px;
-      margin: 100px auto 0 auto; /* top margin 100px, automatic left/right margins center horizontally */
-      z-index: 21;
-      position: relative;
-    }
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0px;
+  max-width: 600px;  /* shrink max-width from 1000px */
+  margin: 100px auto 0 auto; /* center horizontally */
+  justify-content: center;   /* center the grid within its container */
+  z-index: 21;
+  position: relative;
+}
 
 
     .team-member {
@@ -49,6 +50,7 @@
       margin-bottom: 10px;
       pointer-events: none; /* so clicks are detected on container */
       filter: grayscale(100%);
+      border-radius: 15px;
     }
 
 
@@ -70,6 +72,7 @@
       justify-content: center;
       align-items: center;
       padding: 20px;
+     
     }
     #modal.active {
       display: flex;
@@ -86,6 +89,7 @@
       align-items: center;
       text-align: left;
       position: relative;
+      border-radius: 15px;
     }
     #modal-content img {
       width: 300px;
@@ -120,8 +124,10 @@
     /* Responsive grid adjustments */
     @media (max-width: 768px) {
       .team-container {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        margin-top: 10px;
+        grid-template-columns: repeat(2, 1fr); /* two columns */
+        max-width: 400px; /* optional: constrain max width */
+        margin-top: 100px !important;
+        justify-content: center; /* center the grid */
       }
       #modal-content img {
         width: 90vw;
