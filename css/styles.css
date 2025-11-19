@@ -625,7 +625,7 @@ nav {
 }
 
 .full-viewport {
-  height: 100vh;
+  height: 150vh;
   padding-top: 0px;         /* keeps it clear of navbar */
 }
 
