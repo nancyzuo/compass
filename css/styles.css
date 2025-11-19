@@ -625,12 +625,12 @@ nav {
 }
 
 .full-viewport {
-  height: 90vh;
+  height: 120vh;
   padding-top: 0px;         /* keeps it clear of navbar */
 }
 
 .hero-top {
-  margin-bottom: 100%;
+  margin-bottom: 150%;
 }
 
 .title-image {
