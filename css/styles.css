@@ -599,6 +599,42 @@ nav {
     font-size: 0.9rem;
   }
 
+  .description {
+    font-size: 0.75rem;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+    opacity: 70%;
+}
+
+.content-container {
+
+  bottom: 20vh;        /* pushes it into bottom half */
+  
+}
+
+#overlay {
+  width: 75%;
+}
+
+.mobile-overlay {
+  display: none;
+}
+
+.full-viewport {
+  height: 70vh;
+  padding-top: 0px;         /* keeps it clear of navbar */
+}
+
+.hero-top {
+  margin-bottom: 0%;
+}
+
+.title-image {
+  width: 50%;
+}
+
+
   .mobile-logo {
     display: block;
   }
