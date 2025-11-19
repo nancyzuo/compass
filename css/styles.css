@@ -594,7 +594,7 @@ nav {
 }
 
 /* Extra small devices (phones, 480px and down) */
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .subtitle, .location, .apply-deadline {
     font-size: 0.9rem;
   }
