@@ -770,5 +770,9 @@ nav {
     font-size: 18px;
   }
 
+   .faq-question::before {
+  content: none;
+}
+
 
 }
