@@ -61,14 +61,49 @@ html, body {
   cursor: none;
 }
 
-/* Content container */
+/* for info and apply page containers */
+.page-container {
+  max-width: 800px;
+  margin: 7.5vh auto 40px auto; /* original vertical spacing */
+  text-align: left;
+  padding: 0 20px;
+}
+
+.page-container h1,
+.page-container h2,
+.page-container h3 {
+  text-align: center;
+}
+
+.page-container p {
+  margin-bottom: 1.2em;
+}
+
+
+
+
+/* Content container for index page only */
 .content-container {
   max-width: 800px;
-  margin: 7.5vh auto 40px auto;  /* Top margin responsive, horizontal center */
-  padding: 0 40px;
-  color: white;
-  text-align: left;  /* Inner text left aligned */
-  box-sizing: border-box;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 5vh;        /* pushes it into bottom half */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  
+}
+
+.content-container p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+
+.content-container p,
+.content-container .subtitle.zh,
+.content-container .subtitle.en {
+  text-align: left;
 }
 
 
@@ -126,13 +161,13 @@ p {
 }
 
 .sponsor-logo-left {
-  max-height: 60px; /* smaller size for left logo */
+  max-height: 40px; /* smaller size for left logo */
   opacity: 50%;
   transition: opacity 0.3s ease;
 }
 
 .sponsor-logo-right {
-  max-height: 150px; /* larger size for right logo */
+  max-height: 80px; /* larger size for right logo */
   opacity: 50%;
   transition: opacity 0.3s ease;
 }
@@ -298,6 +333,12 @@ nav {
 }
 
 
+
+.hero-top {
+  margin-bottom: 20%;
+}
+
+
 /* Center container */
 .center-container {
   display: flex;
@@ -312,7 +353,13 @@ nav {
 }
 
 .full-viewport {
-  height: 100vh; /* full viewport height */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* centers vertically */
+  align-items: center;       /* centers horizontally */
+  padding-top: 60px;         /* keeps it clear of navbar */
+  box-sizing: border-box;
 }
 
 /* Title image */
@@ -347,6 +394,14 @@ nav {
   font-weight: 500;
   letter-spacing: 1px;
   opacity: 0.3;
+}
+
+.description {
+  font-size: 1rem;
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: justify;
+  opacity: 70%;
 }
 
 /* mobile logo */
@@ -491,9 +546,15 @@ nav {
   max-width: 300px; /* limit maximum size */
 }
 
-.subtitle, .location, .apply-deadline {
+.subtitle, .location{
   font-size: 1.2rem;
   margin: 8px 0;
+}
+
+.apply-deadline {
+   font-size: 0.8rem;
+  margin: 8px 0;
+  
 }
 
   #nav-toggle-button,
@@ -522,7 +583,10 @@ nav {
   .apply-btn {
     padding: 10px 18px;
     font-size: 1rem;
+  
   }
+
+  
 
 
 
