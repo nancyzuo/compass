@@ -59,8 +59,12 @@ html, body {
   text-align: center; /* center content container horizontally */
   line-height: 1.6;
   cursor: none;
+}
+
+.home-page{
   overflow: hidden;
 }
+
 
 /* for info and apply page containers */
 .page-container {
