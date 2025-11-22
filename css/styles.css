@@ -564,6 +564,8 @@ nav {
 
 
 
+
+
 /* MEDIA SIZE FOR RESPONSIVE LAYOUT */
 /* Responsive tweaks below 768px width */
 @media (max-width: 768px) {
@@ -597,7 +599,7 @@ nav {
 }
 
 /* Extra small devices (phones, 480px and down) */
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .subtitle, .location, .apply-deadline {
     font-size: 0.9rem;
   }
@@ -625,12 +627,14 @@ nav {
 }
 
 .full-viewport {
-  height: 150vh;
+  height: 100vh;
   padding-top: 0px;         /* keeps it clear of navbar */
+  overflow: hidden;
 }
 
 .hero-top {
-  margin-bottom:200%;
+  /* margin-bottom:100%; */
+  overflow: hidden;
 }
 
 

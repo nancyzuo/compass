@@ -244,6 +244,10 @@
       modalImg.src = img;
       modalImg.alt = name;
 
+      document.getElementById("nav-toggle-button").style.display = "none";
+      document.getElementById("mobile-menu-overlay").style.display = "none";
+
+
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
@@ -251,7 +255,15 @@
     function hideModal() {
       modal.classList.remove('active');
       document.body.style.overflow = '';
+
+      // Restore hamburger + overlay visibility
+      const navToggle = document.getElementById("nav-toggle-button");
+      const overlay = document.getElementById("mobile-menu-overlay");
+
+      navToggle.style.display = "";
+      overlay.style.display = "";
     }
+    
 
     document.querySelectorAll('.team-member').forEach(member => {
       member.addEventListener('click', () => showModal(member));
@@ -265,6 +277,8 @@
     window.addEventListener('keydown', e => {
       if (e.key === 'Escape') hideModal();
     });
+
+    
   </script>
 
 </body>
