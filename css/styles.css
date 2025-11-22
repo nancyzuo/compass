@@ -292,6 +292,71 @@ nav {
     0 0 15px white;
 }
 
+/* #btn-en #btn-zh #btn-en-mobile #btn-zh-mobile {
+  color: white !important;
+} */
+
+#btn-en {
+  color: white;
+  opacity: 50%;
+}
+
+#btn-zh {
+  color: white;
+  opacity: 50%;
+}
+
+#btn-en:hover {
+  color: white;
+  opacity: 100%;
+}
+
+#btn-zh:hover {
+  color: white;
+  opacity: 100%;
+}
+
+#btn-en-mobile {
+  color: white;
+  opacity: 50%;
+}
+
+#btn-zh-mobile {
+  color: white;
+  opacity: 50%;
+}
+
+
+
+
+
+/* #btn-en.active #btn-zh.active #btn-en-mobile.active #btn-zh-mobile.active {
+  text-decoration: underline;
+} */
+
+#btn-en.active {
+   color: rgb(255, 223, 70);
+   opacity: 100%;
+}
+
+#btn-zh.active {
+   color: rgb(255, 223, 70);
+   opacity: 100%;
+}
+
+#btn-en-mobile.active {
+   color: rgb(255, 223, 70);
+   opacity: 100%;
+}
+
+#btn-zh-mobile.active {
+   color: rgb(255, 223, 70);
+   opacity: 100%;
+}
+
+
+
+
 /* Apply button in navbar and main */
 .apply-btn {
   display: inline-block;
@@ -524,7 +589,7 @@ nav {
     border-radius: 0 0 5px 5px;
   }
   .faq-item.active .faq-answer {
-  max-height: none; 
+  max-height: none; /* or large enough to show full content */
   padding: 10px;
   transition: max-height 0.3s ease, padding 0.3s ease;
 }
