@@ -59,6 +59,7 @@ html, body {
   text-align: center; /* center content container horizontally */
   line-height: 1.6;
   cursor: none;
+  overflow: hidden;
 }
 
 /* for info and apply page containers */
@@ -334,9 +335,7 @@ nav {
 
 
 
-.hero-top {
-  margin-bottom: 20%;
-}
+
 
 
 /* Center container */
@@ -397,7 +396,7 @@ nav {
 }
 
 .description {
-  padding-top: 10%;
+  padding-top: 5%;
   font-size: 1rem;
   margin-left: 5%;
   margin-right: 5%;
@@ -612,12 +611,12 @@ nav {
     text-align: center;
     opacity: 70%;
 }
-
+/* 
 .content-container {
 
-  bottom: 10vh;        /* pushes it into bottom half */
+  bottom: 10vh;       
   
-}
+} */
 
 #overlay {
   width: 75%;
