@@ -524,7 +524,7 @@ nav {
     border-radius: 0 0 5px 5px;
   }
   .faq-item.active .faq-answer {
-  max-height: 300px; /* or large enough to show full content */
+  max-height: none; 
   padding: 10px;
   transition: max-height 0.3s ease, padding 0.3s ease;
 }
