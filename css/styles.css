@@ -128,13 +128,16 @@ h1 {
 
 h2 {
   font-size: 1.3rem;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 p {
   font-size: 1.1rem;
-  margin-bottom: 10px;
   color: #c4c4c4;
+}
+
+li {
+  margin-bottom: 20px;
 }
 
 .note {
