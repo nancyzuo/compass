@@ -164,7 +164,11 @@
 
   <!-- Team grid -->
   <div class="team-container" id="team-container">
-    <div class="team-member" data-name="David Yu" data-bio="David is doing research in scalable collaborative cultures – how we can design better ecosystems for humanity to solve some of the largest social-technical problems facing us today. In the past, he has spent 5 years in tech startups as a director of growth at one, and an anthropologist at another. He is interested in complexity theory, organizational theory, and philosophy. His current pet project is creating a watch collection that he assembles himself." data-img="/images/headshots/davidyu.jpg">
+    <div class="team-member" 
+        data-name="David Yu" 
+        data-bio="David is doing research in scalable collaborative cultures – how we can design better ecosystems for humanity to solve some of the largest social-technical problems facing us today. In the past, he has spent 5 years in tech startups as a director of growth at one, and an anthropologist at another. He runs SPARC (link) in the US and helped run two camps in Taiwan[linkaspr] during 2024 and 2025. He is interested in complexity theory, organizational theory, and philosophy. David is currently learning to assemble his own watches." 
+        data-bio-zh="David 正在研究「可擴展的協作文化」: 如何打造更良好的社會生態系統來面對當今重大的協調問題。過去，他在科技新創領域工作了五年，期間曾擔任一家公司成長總監，並在另一家公司擔任人類學研究員。他在美國主導 SPARC（link），並於 2024 與 2025 年協助在台灣舉辦兩場營隊（link)。他的興趣包含複雜性理論、組織理論與哲學。目前，David 正在學習自己組裝手錶。"
+        data-img="/images/headshots/davidyu.jpg">
       <img src="/images/headshots/davidyu.webp" alt="David Yu" />
       <div class="member-name">David Yu</div>
     </div>
@@ -179,12 +183,12 @@
       <div class="member-name">Sicong Shen</div>
     </div>
 
-    <div class="team-member" data-name="Sophia Huang" data-bio="Hi, I'm Sophia! I live in Taiwan, and am currently working on a masters in climate change and sustainability at National Taiwan University. I'm writing my thesis on climate quitting and how people are reflecting on their careers in the face of the climate crisis. I'm also a runner, and am running the Taipei Half Marathon for the 4th time in December. I’ve previously worked in HR tech, sports retail, and private aviation, in addition to starting two small companies." data-img="/images/headshots/sophiahuang.png">
+    <div class="team-member" data-name="Sophia Huang" data-bio="Sophia lives in Taiwan, and is currently working on a masters in climate change and sustainability at National Taiwan University. She is writing her thesis on “climate quitting” and how people are reflecting on their careers in the face of the climate crisis. Sophia is also a runner, and is running the Taipei Half Marathon for the 4th time in December. She has previously worked in HR tech, sports retail, and private aviation, in addition to starting two small companies." data-img="/images/headshots/sophiahuang.png">
       <img src="/images/headshots/sophiahuang.webp" alt="Sophia Huang" />
       <div class="member-name">Sophia Huang</div>
     </div>
 
-    <div class="team-member" data-name="Cat Wu" data-bio="Doing economics in grad school. Interested in both user and systems design. Was a product manager at Shopify. Temporary hobbies: climbing, yarn, photography, classical Chinese" data-img="/images/headshots/catwu.jpg">
+    <div class="team-member" data-name="Cat Wu" data-bio="Catherine is pursuing a PhD in Information Systems at NYU Stern. Her research involves creating economic models of futures where we have advanced AI systems. In previous lives, she was a product manager at Shopify and Mastercard, and received her bachelor’s in Applied Math and Neuroscience at Harvard. Her attention is fickle; current interests include mechanism design, bouldering and Silksong." data-img="/images/headshots/catwu.jpg">
       <img src="/images/headshots/catwu.webp" alt="Cat Wu" />
       <div class="member-name">Cat Wu</div>
     </div>
@@ -194,10 +198,18 @@
       <div class="member-name">Aaron Lin</div>
     </div>
 
-    <div class="team-member" data-name="Ofer Grossman" data-bio="Ofer Grossman has a PhD from MIT in theoretical computer science, and works as a mathematical consultant. He's broadly interested in science, languages, spending time outdoors, and freediving." data-img="/images/headshots/ofergrossman.jpeg">
+    <div class="team-member" 
+        data-name="Ofer Grossman" 
+        data-bio="Ofer Grossman has a PhD from MIT in theoretical computer science, and works as a mathematical consultant. He's broadly interested in science, languages, spending time outdoors, and freediving." 
+        data-bio-zh="Ofer Grossman, 麻省理工理論計算機科學博士，現在做數學顧問。他對科學充滿熱情，對語言抱有濃厚興趣，對各種戶外運動有著難以抵擋的熱愛。他的生活可以在'公式推到天亮'和'潛入海底享受自然的靜謐'之間自由切換。"
+        data-img="/images/headshots/ofergrossman.jpeg">
       <img src="/images/headshots/ofergrossman.webp" alt="Ofer Grossman" />
       <div class="member-name">Ofer Grossman</div>
     </div>
+
+
+
+
 
     <div class="team-member" data-name="Nancy Zuo" data-bio="Nancy graduated from Carnegie Mellon with a degree in Digital Immersive Storytelling. She's interested in how humans share stories and connect with each other. She likes to draw, make videos, watch musicals, and sew." data-img="/images/headshots/nancyzuo.png">
       <img src="/images/headshots/nancyzuo.webp" alt="Nancy Zuo" />
@@ -235,22 +247,34 @@
     const modalClose = document.getElementById('modal-close');
 
     function showModal(member) {
-      const name = member.getAttribute('data-name');
-      const bio = member.getAttribute('data-bio');
-      const img = member.getAttribute('data-img');
+  // Detect current language from the <html> tag
+  const lang = document.documentElement.lang; // "en" or "zh"
 
-      modalName.textContent = name;
-      modalBio.textContent = bio;
-      modalImg.src = img;
-      modalImg.alt = name;
+  // Choose the correct attribute based on language
+  const name = 
+    (lang === "zh" ? member.getAttribute("data-name-zh") : null) ||
+    member.getAttribute("data-name");
 
-      document.getElementById("nav-toggle-button").style.display = "none";
-      document.getElementById("mobile-menu-overlay").style.display = "none";
+  const bio =
+    (lang === "zh" ? member.getAttribute("data-bio-zh") : null) ||
+    member.getAttribute("data-bio");
 
+  const img = member.getAttribute('data-img');
 
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+  // Fill modal
+  modalName.textContent = name;
+  modalBio.textContent = bio;
+  modalImg.src = img;
+  modalImg.alt = name;
+
+  // Hide mobile navbar elements
+  document.getElementById("nav-toggle-button").style.display = "none";
+  document.getElementById("mobile-menu-overlay").style.display = "none";
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
 
     function hideModal() {
       modal.classList.remove('active');

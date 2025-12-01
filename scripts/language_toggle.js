@@ -1,4 +1,4 @@
-import { waitForElement } from "./common.js"
+import { waitForElement } from "./common.js";
 
 waitForElement("btn-en", (btnEn) => {
   waitForElement("btn-en-mobile", (btnEnMobile) => {
@@ -10,7 +10,7 @@ waitForElement("btn-en", (btnEn) => {
     applyLanguage(current);
 
     // Button event listeners
-    const enFunction = function() {
+    const enFunction = function () {
       if (current !== "en") {
         current = "en";
         localStorage.setItem("lang", current);
@@ -18,7 +18,7 @@ waitForElement("btn-en", (btnEn) => {
       }
     };
 
-    const zhFunction = function() {
+    const zhFunction = function () {
       if (current !== "zh") {
         current = "zh";
         localStorage.setItem("lang", current);
@@ -34,6 +34,7 @@ waitForElement("btn-en", (btnEn) => {
 });
 
 function applyLanguage(lang) {
+  document.documentElement.lang = lang;
   waitForElement("btn-en", (btnEn) => {
     waitForElement("btn-en-mobile", (btnEnMobile) => {
       const btnZh = document.getElementById("btn-zh");
