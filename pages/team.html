@@ -3,307 +3,211 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/png" href="/images/compasslogo.png" />
+  <link rel="icon" type="image/png" href="/images/compasslogo.png">
   <title>Compass Fellowship | Team (團隊)</title>
-
   <link rel="stylesheet" href="/css/styles.css" />
   <script type="module" src="/scripts/common.js" defer></script>
-  <script type="module" src="/scripts/fireflies.js" defer></script> 
-  <script type="module" src="/scripts/language_toggle.js" defer></script> 
+  <script type="module" src="/scripts/fireflies.js" defer></script>
+  <script type="module" src="/scripts/language_toggle.js" defer></script>
   <script type="module" src="/scripts/cursor.js" defer></script>
   <script type="module" src="/scripts/glslShader.js" defer></script>
   <script type="module" src="/scripts/hamburgermenu.js" defer></script>
   <script type="text/javascript" src="https://unpkg.com/glsl-canvas-js/dist/umd/glsl-canvas.min.js"></script>
 
   <style>
+    /* --- RESET --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    /* Team container grid */
-    .team-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0px;
-  max-width: 600px;  /* shrink max-width from 1000px */
-  margin: 100px auto 0 auto; /* center horizontally */
-  justify-content: center;   /* center the grid within its container */
-  z-index: 21;
-  position: relative;
+    html, body {
+      height: 100%;
+      font-family: 'Inconsolata', monospace;
+      color: white;
+      overflow-x: hidden;
+      text-align: center;
+      line-height: 1.6;
+      cursor: none;
+      background: #0b0220;
+    }
+
+    /* --- BACKGROUND CANVAS --- */
+    #background { position: fixed; inset: 0; z-index: -2; }
+    #skyCanvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; display: block; }
+    #top-vignette { position: fixed; top: 0; left: 0; width: 100%; height: 100px; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent); z-index: 19; }
+
+    /* --- NAVBAR --- */
+    #navbar-placeholder, #mobile-navbar-placeholder { width: 100%; }
+    nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-around; gap: 0; z-index: 20; align-items: center; font-size: 1.1rem; letter-spacing: 1px; padding-left: 180px; }
+    .nav-logo img { height: 40px; width: auto; transition: filter 0.3s ease; }
+    .nav-logo img:hover { filter: drop-shadow(0 0 8px yellow); }
+
+    /* TEAM SECTION */
+.team-container {
+  display: flex;
+  flex-direction: column; /* stack members vertically */
+  gap: 30px; /* space between each person */
+  max-width: 800px;
+  margin: 120px auto 60px auto;
+  padding: 0 20px;
+}
+
+.team-member {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.team-member img {
+  width: 240px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 0px;
+  filter: grayscale(100%);
+}
+
+.member-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.member-name { font-size: 1.15rem; font-weight: 600; margin-bottom: 5px; color: #ffffff; }
+.member-bio { font-size: 0.95rem; line-height: 1.45; color: #d7d7d7; }
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+   #team {
+    padding-top: 100px; /* adjust this to match navbar + vignette height */
+  }
+
+  .team-member {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+  .member-info { text-align: left; max-width: 75%; }
 }
 
 
-    .team-member {
-      cursor: pointer;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      color: white;
-    }
-
-
-    .team-member img {
-      width: 160px;
-      height: 160px;
-      object-fit: cover;
-      margin-bottom: 10px;
-      pointer-events: none; /* so clicks are detected on container */
-      filter: grayscale(100%);
-      border-radius: 15px;
-    }
-
-
-
-    .member-name {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    /* Modal styling */
-    #modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(6px);
-      z-index: 10000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-     
-    }
-    #modal.active {
-      display: flex;
-    }
-    #modal-content {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 25px;
-      max-width: 600px;
-      max-height: 90vh;
-      overflow-y: auto;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: left;
-      position: relative;
-      border-radius: 15px;
-    }
-    #modal-content img {
-      width: 300px;
-      height: 300px;
-      object-fit: cover;
-      margin-bottom: 20px;
-      display: none;
-      
-    }
-    #modal-content h2 {
-      margin: 0 0 15px 0;
-      font-size: 2rem;
-    }
-    #modal-content p {
-      font-size: 1.2rem;
-      line-height: 1.5;
-    }
-    #modal-close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 28px;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-    }
-    #modal-close:hover {
-      color: #ffd84d;
-    }
-
-    /* Responsive grid adjustments */
-    @media (max-width: 768px) {
-      .team-container {
-        grid-template-columns: repeat(2, 1fr); /* two columns */
-        max-width: 400px; /* optional: constrain max width */
-        margin-top: 100px !important;
-        justify-content: center; /* center the grid */
-      }
-      #modal-content img {
-        width: 90vw;
-        height: auto;
-      }
-    }
+    /* --- OTHER STYLES (optional for page consistency) --- */
+    h2 { font-size: 1.8rem; margin-bottom: 20px; color: #ffffff; }
   </style>
 </head>
 <body>
 
   <div id="top-vignette"></div>
+  <div id="background"><canvas id="skyCanvas"></canvas></div>
 
-  <div id="background">
-    <canvas id="skyCanvas"></canvas>
-  </div>
-
+  <!-- NAVBAR -->
   <div id="navbar-placeholder"></div>
   <script>
     fetch('components/navbar.html')
       .then(response => response.text())
-      .then(data => {
-        document.getElementById('navbar-placeholder').innerHTML = data;
-      });
+      .then(data => { document.getElementById('navbar-placeholder').innerHTML = data; });
   </script>
 
   <div id="mobile-navbar-placeholder"></div>
   <script>
     fetch('components/mobile_navbar.html')
       .then(response => response.text())
-      .then(data => {
-        document.getElementById('mobile-navbar-placeholder').innerHTML = data;
-      });
+      .then(data => { document.getElementById('mobile-navbar-placeholder').innerHTML = data; });
   </script>
 
-  <!-- Team grid -->
-  <div class="team-container" id="team-container">
-    <div class="team-member" 
-        data-name="David Yu" 
-        data-bio="David is doing research in scalable collaborative cultures – how we can design better ecosystems for humanity to solve some of the largest social-technical problems facing us today. In the past, he has spent 5 years in tech startups as a director of growth at one, and an anthropologist at another. He runs SPARC (link) in the US and helped run two camps in Taiwan[linkaspr] during 2024 and 2025. He is interested in complexity theory, organizational theory, and philosophy. David is currently learning to assemble his own watches." 
-        data-bio-zh="David 正在研究「可擴展的協作文化」: 如何打造更良好的社會生態系統來面對當今重大的協調問題。過去，他在科技新創領域工作了五年，期間曾擔任一家公司成長總監，並在另一家公司擔任人類學研究員。他在美國主導 SPARC（link），並於 2024 與 2025 年協助在台灣舉辦兩場營隊（link)。他的興趣包含複雜性理論、組織理論與哲學。目前，David 正在學習自己組裝手錶。"
-        data-img="/images/headshots/davidyu.jpg">
-      <img src="/images/headshots/davidyu.webp" alt="David Yu" />
-      <div class="member-name">David Yu</div>
+  <!-- TEAM SECTION -->
+  <section id="team">
+    <!-- <h2>Our Team</h2> -->
+    <div class="team-container">
+      <div class="team-member">
+        <img src="/images/headshots/davidyu.webp" alt="David Yu" />
+        <div class="member-info">
+          <div class="member-name">David Yu</div>
+          <p class="member-bio en">David is doing research in scalable collaborative cultures – how we can design better ecosystems for humanity to solve some of the largest social-technical problems facing us today. In the past, he has spent 5 years in tech startups as a director of growth at one, and an anthropologist at another. He runs SPARC in the US and helped run two camps in Taiwan during 2024 and 2025. He is interested in complexity theory, organizational theory, and philosophy. David is currently learning to assemble his own watches.</p>
+          <p class="member-bio zh">David 正在研究「可擴展的協作文化」: 如何打造更良好的社會生態系統來面對當今重大的協調問題。過去，他在科技新創領域工作了五年，期間曾擔任一家公司成長總監，並在另一家公司擔任人類學研究員。他在美國主導 SPARC，並於 2024 與 2025 年協助在台灣舉辦兩場營隊。他的興趣包含複雜性理論、組織理論與哲學。目前，David 正在學習自己組裝手錶。</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="/images/headshots/calebrak.webp" alt="Caleb Rak" />
+        <div class="member-info">
+          <div class="member-name">Caleb Rak</div>
+          <p class="member-bio">Caleb graduated from Harvard with a degree in Comparative Literature and Linguistics. He has helped organize various conferences and workshops in different countries for the past few years and is currently head of events and operations at a nonprofit. He is interested in comparative philosophy, ecological history, and linguistics. Caleb can speak English, French, and Chinese, grows most of the vegetables he eats, and enjoys drinking tea.</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="/images/headshots/sicongshen.webp" alt="Sicong Shen" />
+        <div class="member-info">
+          <div class="member-name">Sicong Shen</div>
+          <p class="member-bio">Sicong is most interested in how people learn, change, and grow. In a past life, he studied math at MIT and worked as a software engineer. These days, he is a public speaking coach and training in as many coaching and healing modalities as he can.</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="/images/headshots/sophiahuang.webp" alt="Sophia Huang" />
+        <div class="member-info">
+          <div class="member-name">Sophia Huang</div>
+          <p class="member-bio">Sophia lives in Taiwan, and is currently working on a masters in climate change and sustainability at National Taiwan University. She is writing her thesis on “climate quitting” and how people are reflecting on their careers in the face of the climate crisis. Sophia is also a runner, and is running the Taipei Half Marathon for the 4th time in December. She has previously worked in HR tech, sports retail, and private aviation, in addition to starting two small companies.</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="/images/headshots/catwusquare.png" alt="Cat Wu" />
+        <div class="member-info">
+          <div class="member-name">Cat Wu</div>
+          <p class="member-bio">Catherine is pursuing a PhD in Information Systems at NYU Stern. Her research involves creating economic models of futures where we have advanced AI systems. In previous lives, she was a product manager at Shopify and Mastercard, and received her bachelor’s in Applied Math and Neuroscience at Harvard. Her attention is fickle; current interests include mechanism design, bouldering and Silksong.</p>
+        </div>
+      </div>
+      
+      <div class="team-member">
+        <img src="/images/headshots/ofergrossman.webp" alt="Ofer Grossman" />
+        <div class="member-info">
+          <div class="member-name">Ofer Grossman</div>
+          <p class="member-bio en">Ofer Grossman has a PhD from MIT in theoretical computer science, and works as a mathematical consultant. He's broadly interested in science, languages, spending time outdoors, and freediving.</p>
+          <p class="member-bio zh">Ofer Grossman, 麻省理工理論計算機科學博士，現在做數學顧問。他對科學充滿熱情，對語言抱有濃厚興趣，對各種戶外運動有著難以抵擋的熱愛。他的生活可以在"公式推到天亮"和"潛入海底享受自然的靜謐"之間自由切換。</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="/images/headshots/aaronlinsquare.png" alt="Aaron Lin" />
+        <div class="member-info">
+          <div class="member-name">Aaron Lin</div>
+          <p class="member-bio">Aaron is currently working as a software engineer, with interests in databases and compute infrastructure. Previously, he studied math at MIT. In his spare time, Aaron enjoys playing go (圍棋), surfing, and drawing.</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="/images/headshots/chelseaguo.webp" alt="Chelsea Guo" />
+        <div class="member-info">
+          <div class="member-name">Chelsea Guo</div>
+          <p class="member-bio">Chelsea is a researcher at Sutter Hill Ventures, supporting several startups with recruiting and strategic projects. She is proud to give people opportunities that could change the trajectory of their lives. Previous versions of Chelsea were dedicated to leading afterschool programs in Boston’s Chinatown and matchmaking events at universities across the US. She studied Sociology and Educational Studies at Harvard.</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="/images/headshots/janabelxia.jpg" alt="Ofer Grossman" />
+        <div class="member-info">
+          <div class="member-name">Janabel Xia</div>
+          <p class="member-bio">Janabel is a first-year math PhD student at Harvard. She is currently most interested in cryptography as a means to both improve our digital infrastructure and increase collective agency of communities, and is a co-founder of Community Privacy Residency. In a past life, she competed in various math Olympiads and was on the U.S. European Girls' Math Olympiad team in 2019. By day, you can find her reading mathematics and cryptography while listening to her carefully curated Spotify playlists. By night, you can find her dancing in the studio, at the park, or in the club.</p>
+        </div>
+      </div>
+
+
+      <div class="team-member">
+        <img src="/images/headshots/nancyzuo.webp" alt="Nancy Zuo" />
+        <div class="member-info">
+          <div class="member-name">Nancy Zuo</div>
+          <p class="member-bio">Nancy graduated from Carnegie Mellon with a degree in Digital Immersive Storytelling. She's interested in how humans share stories and connect with each other. She likes to draw, make videos, watch musicals, and sew.</p>
+        </div>
+      </div>
+
+      
     </div>
-
-    <div class="team-member" data-name="Caleb Rak" data-bio="Caleb graduated from Harvard with a degree in Comparative Literature and Linguistics. He has helped organize various conferences and workshops in different countries for the past few years and is currently head of events and operations at a nonprofit. He is interested in comparative philosophy, ecological history, and linguistics. Caleb can speak English, French, and Chinese, grows most of the vegetables he eats, and enjoys drinking tea." data-img="/images/headshots/calebrak.png">
-      <img src="/images/headshots/calebrak.webp" alt="Caleb Rak" />
-      <div class="member-name">Caleb Rak</div>
-    </div>
-
-    <div class="team-member" data-name="Sicong Shen" data-bio="Sicong is most interested in how people learn, change, and grow. In a past life, he studied math at MIT and worked as a software engineer. These days, he is a public speaking coach and training in as many coaching and healing modalities as he can." data-img="/images/headshots/sicongshen.jpg">
-      <img src="/images/headshots/sicongshen.webp" alt="Sicong Shen" />
-      <div class="member-name">Sicong Shen</div>
-    </div>
-
-    <div class="team-member" data-name="Sophia Huang" data-bio="Sophia lives in Taiwan, and is currently working on a masters in climate change and sustainability at National Taiwan University. She is writing her thesis on “climate quitting” and how people are reflecting on their careers in the face of the climate crisis. Sophia is also a runner, and is running the Taipei Half Marathon for the 4th time in December. She has previously worked in HR tech, sports retail, and private aviation, in addition to starting two small companies." data-img="/images/headshots/sophiahuang.png">
-      <img src="/images/headshots/sophiahuang.webp" alt="Sophia Huang" />
-      <div class="member-name">Sophia Huang</div>
-    </div>
-
-    <div class="team-member" data-name="Cat Wu" data-bio="Catherine is pursuing a PhD in Information Systems at NYU Stern. Her research involves creating economic models of futures where we have advanced AI systems. In previous lives, she was a product manager at Shopify and Mastercard, and received her bachelor’s in Applied Math and Neuroscience at Harvard. Her attention is fickle; current interests include mechanism design, bouldering and Silksong." data-img="/images/headshots/catwu.jpg">
-      <img src="/images/headshots/catwu.webp" alt="Cat Wu" />
-      <div class="member-name">Cat Wu</div>
-    </div>
-
-     <div class="team-member" data-name="Aaron Lin" data-bio="Aaron is currently working as a software engineer, with interests in databases and compute infrastructure. Previously, he studied math at MIT. In his spare time, Aaron enjoys playing go (圍棋), surfing, and drawing." data-img="/images/headshots/aaronlin.jpeg">
-      <img src="/images/headshots/aaronlin.webp" alt="Aaron Lin" />
-      <div class="member-name">Aaron Lin</div>
-    </div>
-
-    <div class="team-member" 
-        data-name="Ofer Grossman" 
-        data-bio="Ofer Grossman has a PhD from MIT in theoretical computer science, and works as a mathematical consultant. He's broadly interested in science, languages, spending time outdoors, and freediving." 
-        data-bio-zh="Ofer Grossman, 麻省理工理論計算機科學博士，現在做數學顧問。他對科學充滿熱情，對語言抱有濃厚興趣，對各種戶外運動有著難以抵擋的熱愛。他的生活可以在'公式推到天亮'和'潛入海底享受自然的靜謐'之間自由切換。"
-        data-img="/images/headshots/ofergrossman.jpeg">
-      <img src="/images/headshots/ofergrossman.webp" alt="Ofer Grossman" />
-      <div class="member-name">Ofer Grossman</div>
-    </div>
-
-
-
-
-
-    <div class="team-member" data-name="Nancy Zuo" data-bio="Nancy graduated from Carnegie Mellon with a degree in Digital Immersive Storytelling. She's interested in how humans share stories and connect with each other. She likes to draw, make videos, watch musicals, and sew." data-img="/images/headshots/nancyzuo.png">
-      <img src="/images/headshots/nancyzuo.webp" alt="Nancy Zuo" />
-      <div class="member-name">Nancy Zuo</div>
-    </div>
-
-    <!-- <div class="team-member" data-name="Janabel Xia" data-bio="please submit your bio" data-img="/images/headshots/nancyzuo.png">
-      <img src="/images/headshots/janabelxia.jpg" alt="non-existent picture of janabel" />
-      <div class="member-name">Janabel Xia</div>
-    </div> -->
-
-    
-
-    <div class="team-member" data-name="Chelsea Guo" data-bio="Chelsea is a researcher at Sutter Hill Ventures, supporting several startups with recruiting and strategic projects. She is proud to give people opportunities that could change the trajectory of their lives. Previous versions of Chelsea were dedicated to leading afterschool programs in Boston’s Chinatown and matchmaking events at universities across the US. She studied Sociology and Educational Studies at Harvard." data-img="/images/headshots/chelseaguo.jpeg">
-      <img src="/images/headshots/chelseaguo.webp" alt="Chelsea Guo" />
-      <div class="member-name">Chelsea Guo</div>
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div id="modal">
-    <div id="modal-close">&times;</div>
-    <div id="modal-content">
-      <img src="" alt="Team Member Photo" id="modal-img" />
-      <h2 id="modal-name"></h2>
-      <p id="modal-bio"></p>
-    </div>
-  </div>
-
-  <script>
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modal-img');
-    const modalName = document.getElementById('modal-name');
-    const modalBio = document.getElementById('modal-bio');
-    const modalClose = document.getElementById('modal-close');
-
-    function showModal(member) {
-  // Detect current language from the <html> tag
-  const lang = document.documentElement.lang; // "en" or "zh"
-
-  // Choose the correct attribute based on language
-  const name = 
-    (lang === "zh" ? member.getAttribute("data-name-zh") : null) ||
-    member.getAttribute("data-name");
-
-  const bio =
-    (lang === "zh" ? member.getAttribute("data-bio-zh") : null) ||
-    member.getAttribute("data-bio");
-
-  const img = member.getAttribute('data-img');
-
-  // Fill modal
-  modalName.textContent = name;
-  modalBio.textContent = bio;
-  modalImg.src = img;
-  modalImg.alt = name;
-
-  // Hide mobile navbar elements
-  document.getElementById("nav-toggle-button").style.display = "none";
-  document.getElementById("mobile-menu-overlay").style.display = "none";
-
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-
-    function hideModal() {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-
-      // Restore hamburger + overlay visibility
-      const navToggle = document.getElementById("nav-toggle-button");
-      const overlay = document.getElementById("mobile-menu-overlay");
-
-      navToggle.style.display = "";
-      overlay.style.display = "";
-    }
-    
-
-    document.querySelectorAll('.team-member').forEach(member => {
-      member.addEventListener('click', () => showModal(member));
-    });
-
-    modalClose.addEventListener('click', hideModal);
-    modal.addEventListener('click', e => {
-      if (e.target === modal) hideModal();
-    });
-
-    window.addEventListener('keydown', e => {
-      if (e.key === 'Escape') hideModal();
-    });
-
-    
-  </script>
+  </section>
 
 </body>
 </html>
