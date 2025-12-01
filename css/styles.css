@@ -690,7 +690,7 @@ nav {
   .sponsors {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 columns */
-    gap: 24px;
+    gap: 0px;
     justify-items: center;
     width: 100%;
   }
@@ -714,7 +714,7 @@ nav {
 } */
 
 #overlay {
-  width: 50%;
+  display: none;
 }
 
 .mobile-overlay {
