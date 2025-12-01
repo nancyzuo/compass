@@ -180,6 +180,20 @@ li {
   transition: opacity 0.3s ease;
 }
 
+.sponsor-logo-right-bottom {
+  max-height: 50px; /* larger size for right logo */
+  opacity: 50%;
+  transition: opacity 0.3s ease;
+}
+
+.sponsor-logo-left-bottom {
+  max-height: 30px; 
+  opacity: 50%;
+  transition: opacity 0.3s ease;
+}
+
+
+
 
 .sponsor-logo:hover {
   opacity: 1; /* fully opaque on hover */
@@ -672,6 +686,15 @@ nav {
 
 /* Extra small devices (phones, 480px and down) */
 @media (max-width: 600px) {
+
+  .sponsors {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 24px;
+    justify-items: center;
+    width: 100%;
+  }
+  
   .subtitle, .location, .apply-deadline {
     font-size: 0.9rem;
   }
@@ -849,6 +872,7 @@ nav {
    .faq-question::before {
   content: none;
 }
+
 
 
 }
