@@ -724,7 +724,7 @@ nav {
 .full-viewport {
   height: 100vh;
   padding-top: 0px;         /* keeps it clear of navbar */
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .hero-top {
