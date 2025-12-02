@@ -14,39 +14,41 @@ float wave(float x) {
 }
 
 vec3 calmGradient(float y) {
-    float t = u_time * 0.8; // slow drift
+    float t = u_time * 0.6;
 
-    // your base colors
-    vec3 bottomBase = vec3(260.0/255.0, 65.0/255.0, 203.0/255.0);
-    vec3 topBase = vec3(0.0/255.0, 0.0/255.0, 0.0/255.0);
+    // ARIZONA SUNSET PALETTE
+    vec3 bottomBase = vec3(0.95, 0.42, 0.15);  // deep orange
+    vec3 midBase    = vec3(1.00, 0.30, 0.45);  // fiery pink-magenta
+    vec3 highBase   = vec3(0.40, 0.15, 0.35);  // sunset purple
+    vec3 topBase    = vec3(0.12, 0.05, 0.12);  // dusky almost-night
 
-    // subtle animated offsets for each channel (small on purpose)
-    vec3 bottomShift = vec3(
-        0.04 * wave(t * 2.4),
-        0.03 * wave(t * 1.1 + 2.0),
-        0.05 * wave(t * 0.5 + 1.3)
+    // animated color breathing
+    vec3 drift = vec3(
+        0.02 * wave(t * 1.3),
+        0.015 * wave(t * 1.8 + 1.2),
+        0.02 * wave(t * 0.9 + 2.4)
     );
 
-    vec3 topShift = vec3(
-        0.03 * wave(t * 1.9),
-        0.02 * wave(t * 1.8),
-        0.04 * wave(t * 0.9)
-    );
+    // 4-STOP smoothly-blended gradient
+    vec3 c1 = mix(bottomBase, midBase, smoothstep(0.00, 0.35, y));
+    vec3 c2 = mix(midBase, highBase, smoothstep(0.25, 0.70, y));
+    vec3 c3 = mix(highBase, topBase, smoothstep(0.55, 1.00, y));
 
-    vec3 bottom = bottomBase + bottomShift;
-    vec3 top    = topBase + topShift;
+    // nested mix keeps transition soft & organic
+    vec3 col = mix(c1, c2, y);
+    col = mix(col, c3, y);
 
-    return mix(bottom, top, pow(y, 0.15));
-    vec3 col = mix(bottom, top, pow(y, 0.18));
+    col += drift;
 
-    
+    // Gently darken top for contrast
+    float topFade = smoothstep(0.2, 1.0, y);
+    col *= mix(1.0, 0.35, topFade);
 
-// Darken the top smoothly
-float topFade = smoothstep(0.2, 1.0, y);
-col *= mix(1.0, 0.45, topFade);  // 0.45 = how dark the top becomes
-
-return col;
+    return col;
 }
+
+
+
 
 vec3 horizonMist(float y) {
     return vec3(72.0/255.0, 63.0/255.0, 109.0/255.0) * pow(1.0 - y, 10.5) * 1.2;
@@ -157,6 +159,8 @@ void main() {
     // Grain noise
     float grain = random(uv * u_resolution.xy);
     col += vec3(grain * 0.05);
+
+    col *= 0.5;   // lower = darker background
 
     gl_FragColor = vec4(col, 1.0);
 }
