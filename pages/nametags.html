@@ -63,13 +63,13 @@ button:disabled {
   background-position: center;
 }
 
-.badge.participant {
+/* .badge.participant {
   background-image: url("../images/nametags/participant.jpg");
 }
 
 .badge.staff {
   background-image: url("../images/nametags/staff.jpg");
-}
+} */
 
 .name {
   position: absolute;
@@ -83,8 +83,8 @@ button:disabled {
   text-transform: uppercase;
 }
 
-.badge.participant .name { color: white; }
-.badge.staff .name { color: #45270F; }
+/* .badge.participant .name { color: white; }
+.badge.staff .name { color: #45270F; } */
 
 .first-name, .last-name { display: block; }
 
@@ -119,22 +119,44 @@ button:disabled {
 <p>upload the .csv file below. it takes a bit of time to download!</p>
 
 <div id="loading">
-  <div>Generating PDF...</div>
+  <div>generating PDF...</div>
   <div class="progress-bar">
     <div class="progress-fill" id="progressFill"></div>
   </div>
-  <div id="progressText">Loading images...</div>
+  <div id="progressText">loading images...</div>
 </div>
 
 
 <div class="controls">
   <input type="file" id="csvInput" accept=".csv">
-  <button id="pdfBtn" disabled>Download Name Tags PDF</button>
+  <button id="pdfBtn" disabled>download name tags PDF</button>
+  <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+  <input type="checkbox" id="styleToggle">
+  student god rays
+</label>
 </div>
 
 <div id="badge-container"></div>
 
+
+
 <script>
+  function getFontColor(role) {
+  if (!useAltStyle) {
+    return role === "staff" ? "#45270F" : "white";
+  } else {
+    return role === "staff" ? "white" : "#45270F";
+  }
+}
+
+
+let useAltStyle = false;
+
+const styleToggle = document.getElementById('styleToggle');
+styleToggle.addEventListener('change', () => {
+  useAltStyle = styleToggle.checked;
+  renderBadges(rows); // re-render preview
+});
 
 
 const csvInput = document.getElementById('csvInput');
@@ -192,10 +214,19 @@ function renderBadges(data) {
       const badge = document.createElement('div');
       badge.className = `badge ${role === "staff" ? "staff" : "participant"}`;
 
+      const imgPath = role === "staff"
+        ? (useAltStyle ? "../images/nametags/staff_alt.jpg" : "../images/nametags/staff.jpg")
+        : (useAltStyle ? "../images/nametags/participant_alt.jpg" : "../images/nametags/participant.jpg");
+
+      badge.style.backgroundImage = `url("${imgPath}")`;
+
+
       const { first, last } = splitName(row.Name);
 
       const nameDiv = document.createElement('div');
       nameDiv.className = 'name';
+      nameDiv.style.color = getFontColor(role);
+
       nameDiv.innerHTML = `<span class="first-name">${first}</span><span class="last-name">${last}</span>`;
 
       badge.appendChild(nameDiv);
@@ -213,7 +244,10 @@ function loadImage(src) {
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.onload = () => resolve(img);
-    img.onerror = reject;
+    img.onerror = () => {
+      console.error("❌ Failed to load image:", src);
+      reject(new Error("Failed to load image: " + src));
+    };
     img.src = src;
   });
 }
@@ -230,7 +264,7 @@ async function renderZenText(name, role) {
     width: 250px; height: 350px; position: relative;
     font-family: "Zen Kurenaido", sans-serif !important;
     font-size: 32pt; line-height: 1.1; text-transform: uppercase;
-    color: ${role === "staff" ? '#45270F' : 'white'};
+    color: ${getFontColor(role)};
     text-align: center; background: transparent;
   `;
   
@@ -272,8 +306,18 @@ async function downloadPDF() {
   const badgeW = (pageW - padding*2 - gap) / 2;
   const badgeH = (pageH - padding*2 - gap) / 2;
 
-  const participantImg = await loadImage("../images/nametags/participant.jpg");
-  const staffImg = await loadImage("../images/nametags/staff.jpg");
+ const participantImg = await loadImage(
+  useAltStyle 
+    ? "../images/nametags/participant_alt.jpg"
+    : "../images/nametags/participant.jpg"
+);
+
+const staffImg = await loadImage(
+  useAltStyle 
+    ? "../images/nametags/staff_alt.png"
+    : "../images/nametags/staff.jpg"
+);
+
   
   const totalBadges = rows.length;
   let processed = 0;
