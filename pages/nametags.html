@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Name Tag Generator ✨</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Zen+Kurenaido&display=swap">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+body {
+  font-family: "Zen Kurenaido", system-ui, sans-serif;
+  margin: 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background: #111827;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+#badge-container {
+  width: 210mm;
+  margin: 0 auto;
+}
+
+/* A4 page with 4 badges */
+.badge-page {
+  width: 210mm;
+  height: 297mm;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 8mm;
+  padding: 8mm;
+  box-sizing: border-box;
+}
+
+.badge {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.badge.participant {
+  background-image: url("../images/nametags/participant.jpg");
+}
+
+.badge.staff {
+  background-image: url("../images/nametags/staff.jpg");
+}
+
+.name {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  text-align: center;
+  font-size: 36pt;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.badge.participant .name { color: white; }
+.badge.staff .name { color: #45270F; }
+
+.first-name, .last-name { display: block; }
+
+#loading {
+  display: none;
+  margin: 20px 0;
+  text-align: center;
+}
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #111827, #45270F);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>name tag generator</h1>
+
+<p>edit <a href="https://docs.google.com/spreadsheets/d/1pI7bR6Kkn43fRjQ-6D8ealzOvSoDMVDb-wRocsZsFrE/edit?usp=sharing">this sheet</a> and download as .csv (keep the heading and format - name & role) </p>
+<p>upload the .csv file below. it takes a bit of time to download!</p>
+
+<div id="loading">
+  <div>Generating PDF...</div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div id="progressText">Loading images...</div>
+</div>
+
+
+<div class="controls">
+  <input type="file" id="csvInput" accept=".csv">
+  <button id="pdfBtn" disabled>Download Name Tags PDF</button>
+</div>
+
+<div id="badge-container"></div>
+
+<script>
+
+
+const csvInput = document.getElementById('csvInput');
+const pdfBtn = document.getElementById('pdfBtn');
+const badgeContainer = document.getElementById('badge-container');
+
+let rows = [];
+
+csvInput.addEventListener('change', handleCSV);
+pdfBtn.addEventListener('click', downloadPDF);
+
+/* ================= CSV ================= */
+
+function handleCSV(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    rows = parseCSV(reader.result);
+    renderBadges(rows);
+    pdfBtn.disabled = rows.length === 0;
+  };
+  reader.readAsText(file);
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  const headers = lines.shift().split(',');
+
+  return lines.map(line => {
+    const cols = line.split(',');
+    const obj = {};
+    headers.forEach((h, i) => obj[h.trim()] = (cols[i] || '').trim());
+    return obj;
+  });
+}
+
+function splitName(fullName) {
+  const parts = (fullName || "").trim().split(/\s+/);
+  return { first: parts[0] || "", last: parts.slice(1).join(" ") };
+}
+
+/* ================= PREVIEW ================= */
+
+function renderBadges(data) {
+  badgeContainer.innerHTML = '';
+
+  for (let i = 0; i < data.length; i += 4) {
+    const page = document.createElement('div');
+    page.className = 'badge-page';
+
+    data.slice(i, i + 4).forEach(row => {
+      const role = (row.Role || "").toLowerCase();
+      const badge = document.createElement('div');
+      badge.className = `badge ${role === "staff" ? "staff" : "participant"}`;
+
+      const { first, last } = splitName(row.Name);
+
+      const nameDiv = document.createElement('div');
+      nameDiv.className = 'name';
+      nameDiv.innerHTML = `<span class="first-name">${first}</span><span class="last-name">${last}</span>`;
+
+      badge.appendChild(nameDiv);
+      page.appendChild(badge);
+    });
+
+    badgeContainer.appendChild(page);
+  }
+}
+
+/* ================= PDF ================= */
+
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+function updateProgress(percent, text) {
+  document.getElementById('progressFill').style.width = percent + '%';
+  document.getElementById('progressText').textContent = text;
+}
+// ADD THESE TWO FUNCTIONS before downloadPDF()
+
+async function renderZenText(name, role) {
+  const tempDiv = document.createElement('div');
+  tempDiv.style.cssText = `
+    width: 250px; height: 350px; position: relative;
+    font-family: "Zen Kurenaido", sans-serif !important;
+    font-size: 32pt; line-height: 1.1; text-transform: uppercase;
+    color: ${role === "staff" ? '#45270F' : 'white'};
+    text-align: center; background: transparent;
+  `;
+  
+  const { first, last } = splitName(name);
+  tempDiv.innerHTML = `
+    <div style="position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); width: 85%;">
+      <span style="display: block; font-weight: 400;">${first.toUpperCase()}</span>
+      <span style="display: block; font-weight: 400;">${last.toUpperCase()}</span>
+    </div>
+  `;
+  
+  document.body.appendChild(tempDiv);
+  await new Promise(r => setTimeout(r, 50)); // Font settle
+  
+  const canvas = await html2canvas(tempDiv, { 
+    scale: 2.5, 
+    backgroundColor: 'transparent', 
+    useCORS: false, 
+    logging: false 
+  });
+  document.body.removeChild(tempDiv);
+  return canvas;
+}
+
+async function downloadPDF() {
+  const loading = document.getElementById('loading');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const btn = document.getElementById('pdfBtn');
+  
+  loading.style.display = 'block';
+  btn.disabled = true;
+  updateProgress(15, 'Loading backgrounds...');
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+
+  const pageW = 210, pageH = 297, padding = 8, gap = 8;
+  const badgeW = (pageW - padding*2 - gap) / 2;
+  const badgeH = (pageH - padding*2 - gap) / 2;
+
+  const participantImg = await loadImage("../images/nametags/participant.jpg");
+  const staffImg = await loadImage("../images/nametags/staff.jpg");
+  
+  const totalBadges = rows.length;
+  let processed = 0;
+
+  for (let i = 0; i < rows.length; i += 4) {
+    if (i !== 0) pdf.addPage();
+    
+    const batch = rows.slice(i, i + 4);
+    for (let j = 0; j < batch.length; j++) {
+      const row = batch[j];
+      const col = j % 2, rowIdx = Math.floor(j / 2);
+      const x = padding + col * (badgeW + gap);
+      const y = padding + rowIdx * (badgeH + gap);
+
+      // 1. CRISP jsPDF background
+      const role = (row.Role || "").toLowerCase();
+      const bg = role === "staff" ? staffImg : participantImg;
+      pdf.addImage(bg, "JPEG", x, y, badgeW, badgeH);
+
+      // 2. ZEN TEXT OVERLAY
+      const textCanvas = await renderZenText(row.Name, role);
+      pdf.addImage(textCanvas.toDataURL('image/png'), 'PNG', x, y, badgeW, badgeH);
+
+      processed++;
+      updateProgress(30 + (processed / totalBadges) * 65, `Badge ${processed}/${totalBadges}`);
+    }
+  }
+
+  pdf.save("name-tags.pdf");
+  updateProgress(100, '✅ finished!!');
+  
+  setTimeout(() => { loading.style.display = 'none'; btn.disabled = false; }, 500);
+}
+
+
+
+
+</script>
+
+</body>
+</html>
